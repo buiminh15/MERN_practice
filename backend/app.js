@@ -1,11 +1,20 @@
 var createError = require('http-errors');
 var express = require('express');
+var dotenv = require('dotenv')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
+var connectDB = require('./config/db')
+var colors = require('colors');
+var errorHandler = require('./middlewares/error')
+var bootcampsRouter = require('./routes/bootcamps');
 var usersRouter = require('./routes/users');
+
+// Load env vars
+dotenv.config({ path: './config/config.env' });
+
+// Connect to DB
+connectDB()
 
 var app = express();
 
@@ -19,8 +28,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/api/v1/bootcamps', bootcampsRouter);
 app.use('/users', usersRouter);
+
+app.use(errorHandler);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
