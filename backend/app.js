@@ -8,7 +8,7 @@ var connectDB = require('./config/db')
 var colors = require('colors');
 var errorHandler = require('./middlewares/error')
 var bootcampsRouter = require('./routes/bootcamps');
-var usersRouter = require('./routes/users');
+var coursesRouter = require('./routes/courses');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/bootcamps', bootcampsRouter);
-app.use('/users', usersRouter);
+app.use('/api/v1/courses', coursesRouter);
 
 app.use(errorHandler);
 
