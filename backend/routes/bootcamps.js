@@ -9,6 +9,10 @@ const {
   bootcampPhotoUpload
 } = require('../controllers/bootcamps');
 
+const Bootcamp = require('../models/Bootcamp')
+const Course = require('../models/Course')
+const advancedResults = require('../middlewares/advancedResults')
+
 // Include other resources routers
 const courseRouter = require('./courses')
 
