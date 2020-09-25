@@ -2,6 +2,7 @@ const geocoder = require('../utils/geocoder')
 const Bootcamp = require('../models/Bootcamp');
 const ErrorHandler = require('../utils/errorResponse');
 const asyncHandler = require('../middlewares/async');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc Get all bootcamps
 // @route GET /api/v1/bootcamps
@@ -113,6 +114,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
       new ErrorHandler(`Bootcamp not found with id of ${req.params.id}`, 404)
     );
   }
+  bootcamp.remove()
   res.status(200).json({ success: true, data: {} });
 });
 
@@ -140,3 +142,34 @@ exports.getBootcampInRadius = asyncHandler(async (req, res, next) => {
     data: bootcamps
   })
 });
+
+// @desc Upload photo for bootcamp
+// @route PUT /api/v1/bootcamps/:id/photo
+// @access Private
+exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
+  const bootcamp = await Bootcamp.findById(req.params.id);
+  if (!bootcamp) {
+    return next(
+      new ErrorHandler(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
+  }
+  if (!req.files) {
+    return next(new ErrorResponse(`Please upload a file `, 400))
+  }
+  console.log(req.files.file)
+  const file = req.files.file
+
+  // Make sure the image is a photo
+  if(!file.mimetype.startsWith('image')) {
+    return next(new ErrorResponse(`Please upload an image file `, 400))
+  }
+  
+});
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var connectDB = require('./config/db')
 var colors = require('colors');
+var fileupload = require('express-fileupload')
 var errorHandler = require('./middlewares/error')
 var bootcampsRouter = require('./routes/bootcamps');
 var coursesRouter = require('./routes/courses');
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileupload())
 
 app.use('/api/v1/bootcamps', bootcampsRouter);
 app.use('/api/v1/courses', coursesRouter);
