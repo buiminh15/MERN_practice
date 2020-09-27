@@ -60,15 +60,15 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
     );
   }
 
-  //   // Make sure user is bootcamp owner
-  //   if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
-  //     return next(
-  //       new ErrorResponse(
-  //         `User ${req.user.id} is not authorized to add a course to bootcamp ${bootcamp._id}`,
-  //         401
-  //       )
-  //     );
-  //   }
+    // Make sure user is bootcamp owner
+    if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+      return next(
+        new ErrorResponse(
+          `User ${req.user.id} is not authorized to add a course to bootcamp ${bootcamp._id}`,
+          401
+        )
+      );
+    }
 
   const course = await Course.create(req.body);
 
