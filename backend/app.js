@@ -1,21 +1,24 @@
 var createError = require('http-errors');
 var express = require('express');
-var dotenv = require('dotenv')
+var dotenv = require('dotenv');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var connectDB = require('./config/db')
+var connectDB = require('./config/db');
 var colors = require('colors');
-var fileupload = require('express-fileupload')
-var errorHandler = require('./middlewares/error')
+var fileupload = require('express-fileupload');
+var errorHandler = require('./middlewares/error');
 var bootcampsRouter = require('./routes/bootcamps');
 var coursesRouter = require('./routes/courses');
 var authRouter = require('./routes/auth');
+var usersRouter = require('./routes/users');
+var reviewsRouter = require('./routes/reviews');
+
 // Load env vars
 dotenv.config({ path: './config/config.env' });
 
 // Connect to DB
-connectDB()
+connectDB();
 
 var app = express();
 
@@ -28,14 +31,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileupload())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(fileupload());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/bootcamps', bootcampsRouter);
 app.use('/api/v1/courses', coursesRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/reviews', reviewsRouter);
 app.use(errorHandler);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
