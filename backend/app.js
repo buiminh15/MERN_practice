@@ -13,9 +13,19 @@ var coursesRouter = require('./routes/courses');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var reviewsRouter = require('./routes/reviews');
-
+var mongoSanitize = require('express-mongo-sanitize');
+var helmet = require('helmet');
+var xss = require('xss-clean');
+var rateLimit = require("express-rate-limit");
+var hpp = require('hpp');
+var cors = require('cors');
 // Load env vars
 dotenv.config({ path: './config/config.env' });
+
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
 
 // Connect to DB
 connectDB();
@@ -33,6 +43,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileupload());
 app.use(express.static(path.join(__dirname, 'public')));
+// Sanitize data
+app.use(mongoSanitize());
+// Set security headers
+app.use(helmet());
+// Prevent XSS attacked
+app.use(xss());
+
+app.use(limiter);
+
+// Prevent HTTP pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
 
 app.use('/api/v1/bootcamps', bootcampsRouter);
 app.use('/api/v1/courses', coursesRouter);
