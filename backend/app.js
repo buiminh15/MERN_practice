@@ -16,7 +16,7 @@ var reviewsRouter = require('./routes/reviews');
 var mongoSanitize = require('express-mongo-sanitize');
 var helmet = require('helmet');
 var xss = require('xss-clean');
-var rateLimit = require("express-rate-limit");
+var rateLimit = require('express-rate-limit');
 var hpp = require('hpp');
 var cors = require('cors');
 // Load env vars
@@ -24,7 +24,7 @@ dotenv.config({ path: './config/config.env' });
 
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
 });
 
 // Connect to DB
@@ -56,7 +56,13 @@ app.use(limiter);
 app.use(hpp());
 
 // Enable CORS
-app.use(cors());
+const corsOpts = {
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOpts));
 
 app.use('/api/v1/bootcamps', bootcampsRouter);
 app.use('/api/v1/courses', coursesRouter);
