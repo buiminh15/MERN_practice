@@ -1,3 +1,9 @@
+## Tutorial below: 
+
+https://www.youtube.com/watch?v=CVpUuw9XSjY&t=1003s&ab_channel=DevEd
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
