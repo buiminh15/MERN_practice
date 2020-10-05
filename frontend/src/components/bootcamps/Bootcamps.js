@@ -1,8 +1,10 @@
 import React from 'react'
+import Navbar from './../navbar/Navbar';
 
 export default function Bootcamps() {
     return (
         <>
+            <Navbar />
             <section className="browse my-5">
                 <div className="container">
                     <div className="row">

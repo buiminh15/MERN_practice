@@ -1,7 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../App.css';
+import { isLogin } from '../../utils/Index';
+
 export default function Navbar() {
+  const _isLogin = isLogin();
+  function logOut() {
+    localStorage.setItem('isLogin', false);
+  }
   return (
     <>
       <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
@@ -20,15 +26,24 @@ export default function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">
-                  <i className="fas fa-sign-in-alt"></i> Login
+              {_isLogin &&
+                <>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/login">
+                      <i className="fas fa-sign-in-alt"></i> Login
                 </NavLink>
-                {/* <Link to="/login">
+                    {/* <Link to="/login">
                   <i className="fas fa-sign-in-alt"></i> 
                   Login
                 </Link> */}
-              </li>
+                  </li>
+                  <li className="nav-item d-none d-sm-block">
+                    <a className="nav-link" href="#">
+                      |
+                </a>
+                  </li>
+                </>
+              }
               <li className="nav-item">
                 <NavLink className="nav-link" to="/register">
                   <i className="fas fa-user-plus"></i> Register
@@ -44,6 +59,20 @@ export default function Navbar() {
                   Browse Bootcamps
                 </NavLink>
               </li>
+              {!_isLogin &&
+                <>
+                  <li className="nav-item d-none d-sm-block">
+                    <a className="nav-link" href="#">
+                      |
+                </a>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/login" onClick={logOut}>
+                      Logout
+                </NavLink>
+                  </li>
+                </>
+              }
             </ul>
           </div>
         </div>
