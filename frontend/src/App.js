@@ -6,6 +6,7 @@ import Login from './components/login/Login';
 import Register from './components/register/Register';
 import NotFound from './components/notFound/Index';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import Test from './Test';
 
 function App() {
   return (
@@ -15,9 +16,10 @@ function App() {
           <Route path={'/login'} component={Login} />
           <Route path={'/register'} component={Register} />
           <Route path={"/search"} component={Index} />
-          {/* <Route path={'/bootcamps'} component={Bootcamps} /> */}
           <PrivateRoute route={'/bootcamps'} component={Bootcamps} />
           <Route component={NotFound} />
+          {/* <Route path={'/bootcamps'} component={Bootcamps} /> */}
+          <Route path={'/test'} component={Test} />
         </Switch>
       </div>
     </Router>
