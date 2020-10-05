@@ -4,6 +4,7 @@ import Bootcamps from './components/bootcamps/Bootcamps';
 import Index from './components/index/Index';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
+import Test from './Test';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path={'/login'} component={Login} />
           <Route path={'/register'} component={Register} />
           <Route path={'/bootcamps'} component={Bootcamps} />
+          <Route path={'/test'} component={Test} />
         </Switch>
       </div>
     </Router>
