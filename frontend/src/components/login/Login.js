@@ -10,7 +10,12 @@ export default function Login(props) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (props.location.state.email && props.location.state.password) {
+    console.log(props);
+    if (
+      props.location.state &&
+      props.location.state.email &&
+      props.location.state.password
+    ) {
       setEmail(props.location.state.email);
       setPassword(props.location.state.password);
     }
