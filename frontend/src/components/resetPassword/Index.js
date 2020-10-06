@@ -60,6 +60,7 @@ export default function ResetPassword() {
           text="Please check your email. New password send to it."
           nameAction="Cancel"
           closePopup={() => setShowPopup(false)}
+          handleAction={() => setShowPopup(false)}
         />
       ) : null}
     </section>
