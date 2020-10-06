@@ -98,8 +98,7 @@ export default function Login(props) {
                   </form>
                   <p>
                     {" "}
-                    Forgot Password?{" "}
-                    <a href="reset-password.html">Reset Password</a>
+                    Forgot Password? <a href="/resetPassword">Reset Password</a>
                   </p>
                 </div>
               </div>
