@@ -1,12 +1,14 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import '../../App.css';
-import { isLogin } from '../../utils/Index';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import "../../App.css";
+import { isLogin } from "../../utils/Index";
 
 export default function Navbar() {
-  const _isLogin = isLogin();
+  const [isLoginState, setIsLoginState] = useState(isLogin());
+
   function logOut() {
-    localStorage.setItem('isLogin', false);
+    setIsLoginState(false);
+    localStorage.setItem("isLogin", false);
   }
   return (
     <>
@@ -26,12 +28,12 @@ export default function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
-              {_isLogin &&
+              {!isLoginState && (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/login">
                       <i className="fas fa-sign-in-alt"></i> Login
-                </NavLink>
+                    </NavLink>
                     {/* <Link to="/login">
                   <i className="fas fa-sign-in-alt"></i> 
                   Login
@@ -40,10 +42,10 @@ export default function Navbar() {
                   <li className="nav-item d-none d-sm-block">
                     <a className="nav-link" href="#">
                       |
-                </a>
+                    </a>
                   </li>
                 </>
-              }
+              )}
               <li className="nav-item">
                 <NavLink className="nav-link" to="/register">
                   <i className="fas fa-user-plus"></i> Register
@@ -59,20 +61,20 @@ export default function Navbar() {
                   Browse Bootcamps
                 </NavLink>
               </li>
-              {!_isLogin &&
+              {isLoginState && (
                 <>
                   <li className="nav-item d-none d-sm-block">
                     <a className="nav-link" href="#">
                       |
-                </a>
+                    </a>
                   </li>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/login" onClick={logOut}>
                       Logout
-                </NavLink>
+                    </NavLink>
                   </li>
                 </>
-              }
+              )}
             </ul>
           </div>
         </div>

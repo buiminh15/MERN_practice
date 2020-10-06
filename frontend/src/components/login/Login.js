@@ -10,7 +10,6 @@ export default function Login(props) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log(props);
     if (
       props.location.state &&
       props.location.state.email &&
