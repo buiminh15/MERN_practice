@@ -26,7 +26,7 @@ export default function Login(props) {
       if (checkLogin) {
         setError("");
         localStorage.setItem("isLogin", true);
-        history.push("/search");
+        history.push("/bootcamps");
       } else {
         localStorage.setItem("isLogin", false);
         setError("Please check account or password!");

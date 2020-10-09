@@ -34,23 +34,22 @@ export default function Navbar() {
                     <NavLink className="nav-link" to="/login">
                       <i className="fas fa-sign-in-alt"></i> Login
                     </NavLink>
-                    {/* <Link to="/login">
-                  <i className="fas fa-sign-in-alt"></i> 
-                  Login
-                </Link> */}
                   </li>
                   <li className="nav-item d-none d-sm-block">
                     <a className="nav-link" href="#">
                       |
                     </a>
                   </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/register">
+                      <i className="fas fa-user-plus"></i> Register
+                  </NavLink>
+                  </li>
                 </>
-              )}
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/register">
-                  <i className="fas fa-user-plus"></i> Register
-                </NavLink>
-              </li>
+              )
+
+              }
+
               <li className="nav-item d-none d-sm-block">
                 <a className="nav-link" href="#">
                   |

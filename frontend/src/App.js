@@ -6,21 +6,21 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import NotFound from "./components/notFound/Index";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import Test from "./Test";
 import ResetPassword from "./components/resetPassword/Index";
+import Bootcamp from "./components/bootcamp/Bootcamp";
 
 function App() {
   return (
     <Router>
       <div>
         <Switch>
+          <Route exact path={"/"} component={Index} />
           <Route path={"/login"} component={Login} />
           <Route path={"/register"} component={Register} />
-          <Route path={"/search"} component={Index} />
           <Route path={"/resetPassword"} component={ResetPassword} />
-          <PrivateRoute route={"/bootcamps"} component={Bootcamps} />
+          <PrivateRoute exact route={"/bootcamps"} component={Bootcamps} />
+          <PrivateRoute route={"/t"} component={Bootcamp} />
           <Route component={NotFound} />
-          <Route path={"/test"} component={Test} />
         </Switch>
       </div>
     </Router>
