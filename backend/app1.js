@@ -1,39 +1,53 @@
+// DEPENDENCIES
+const fs = require('fs');
 const express = require('express');
 const app = express();
-const path = require('path');
-const multer = require('multer');
+const port = `5001`;
+const cors = require('cors');
 
-const port = 4000;
+// LOAD LIBRARIES
+app.use(cors());
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+// API ENDPOINTS
+app.get('/', (req, res) => {
+  const fileTypes = ['csv', 'jpg', 'pdf', 'png', 'xslx'];
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-}
-const upload = multer({ storage: storage, fileFilter: fileFilter });
-
-//Upload route
-app.post('/upload', upload.single('image'), (req, res, next) => {
-    try {
-        return res.status(201).json({
-            message: 'File uploaded successfully'
+  // Check if the right request is coming through for the file type
+  return (
+    new Promise((resolve, reject) => {
+      if (
+        req.query.file &&
+        fileTypes.indexOf(req.query.file.toLowerCase()) > -1
+      ) {
+        return resolve(
+          `sample.${fileTypes[fileTypes.indexOf(req.query.file.toLowerCase())]}`
+        );
+      }
+      return reject(
+        `Please provide a file type of ?file=${fileTypes.join('|')}`
+      );
+    })
+      // Validate if the files exists
+      .then((file) => {
+        return new Promise((resolve, reject) => {
+          if (fs.existsSync(`./files/${file}`)) {
+            return resolve(`./files/${file}`);
+          }
+          return reject(`File '${file}' was not found.`);
         });
-    } catch (error) {
-        console.error(error);
-    }
+      })
+      // Return the file to download
+      .then((filePath) => {
+        res.download(filePath);
+      })
+      // Catches errors and displays them
+      .catch((e) => {
+        res.status(400).send({
+          message: e,
+        });
+      })
+  );
 });
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+// HTTP SERVER
+app.listen(port, () => console.log(`Listening on port: ${port}`));
