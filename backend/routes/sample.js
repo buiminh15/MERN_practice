@@ -1,7 +1,7 @@
 var express = require('express');
 const multer = require('multer');
 var router = express.Router();
-var { getTest, uploadFileToFolder } = require('../controllers/sampleController')
+var { getTest, uploadFileToFolder, getFile } = require('../controllers/sampleController')
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -21,7 +21,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 /* GET home page. */
+
 router.route('/test').get(getTest)
 
-router.route('/upload', upload.single('image')).post(uploadFileToFolder)
+router.post('/upload', upload.single('image'),uploadFileToFolder )
+
+router.route('/download').get(getFile)
 module.exports = router;
