@@ -23,29 +23,20 @@ exports.uploadFileToFolder = (req, res, next) => {
 // }
 
 exports.getFile = (req, res, next) => {
-  console.log('11', req.query.file);
-  const fileTypes = ['csv', 'jpg', 'pdf', 'png', 'xslx'];
-
+ 
   // Check if the right request is coming through for the file type
   return (
     new Promise((resolve, reject) => {
-      if (
-        req.query.file &&
-        fileTypes.indexOf(req.query.file.toLowerCase()) > -1
-      ) {
-        return resolve(
-          `sample.${fileTypes[fileTypes.indexOf(req.query.file.toLowerCase())]}`
-        );
+      if (req.query.file) {
+        return resolve(`${req.query.file}`);
       }
       return reject(
-        `Please provide a file type of ?file=${fileTypes.join('|')}`
+        `Not found`
       );
     })
       // Validate if the files exists
       .then((file) => {
-        console.log(`12`, file)
         return new Promise((resolve, reject) => {
-          console.log(`13`, path.join(`${__dirname}/`,'../files'));
           if (fs.existsSync(path.join(`${__dirname}/`, `../files/${file}`))) {
             return resolve(path.join(`${__dirname}/`, `../files/${file}`));
           }
@@ -65,4 +56,44 @@ exports.getFile = (req, res, next) => {
   );
 };
 
+// exports.getFile = (req, res, next) => {
+//   const fileTypes = ['csv', 'jpg', 'pdf', 'png', 'xslx'];
 
+//   // Check if the right request is coming through for the file type
+//   return (
+//     new Promise((resolve, reject) => {
+//       if (
+//         req.query.file &&
+//         fileTypes.indexOf(req.query.file.toLowerCase()) > -1
+//       ) {
+//         return resolve(
+//           `sample.${fileTypes[fileTypes.indexOf(req.query.file.toLowerCase())]}`
+//         );
+//       }
+//       return reject(
+//         `Please provide a file type of ?file=${fileTypes.join('|')}`
+//       );
+//     })
+//       // Validate if the files exists
+//       .then((file) => {
+//         console.log(`12`, file)
+//         return new Promise((resolve, reject) => {
+//           console.log(`13`, path.join(`${__dirname}/`,'../files'));
+//           if (fs.existsSync(path.join(`${__dirname}/`, `../files/${file}`))) {
+//             return resolve(path.join(`${__dirname}/`, `../files/${file}`));
+//           }
+//           return reject(`File '${file}' was not found.`);
+//         });
+//       })
+//       // Return the file to download
+//       .then((filePath) => {
+//         res.download(filePath);
+//       })
+//       // Catches errors and displays them
+//       .catch((e) => {
+//         res.status(400).send({
+//           message_MINHBB: e,
+//         });
+//       })
+//   );
+// };
