@@ -8,17 +8,14 @@ class Sample extends Component {
     { img: './logo192.png', description: 'aaaaa', value: 'sample.png' },
     { img: './logo192.png', description: 'aaaaa', value: 'sample.pdf' },
   ];
- 
 
   render() {
+    const list = this.datas.map((data) => <Card1 datas={data} />);
     return (
       <div className="App">
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
-            <div className="col col-12">
-              <Card1 datas={this.datas[0]} />
-
-            </div>
+            <div className="col col-4">{list}</div>
           </div>
         </div>
       </div>
