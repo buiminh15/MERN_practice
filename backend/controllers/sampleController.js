@@ -1,4 +1,5 @@
 let path = require("path");
+const fs = require('fs');
 
 exports.getTest = (req, res, next) => {
     res.status(200).json({data: path.join(`${__dirname}/`)})
@@ -22,6 +23,7 @@ exports.uploadFileToFolder = (req, res, next) => {
 // }
 
 exports.getFile = (req, res, next) => {
+  console.log('11', req.query.file);
   const fileTypes = ['csv', 'jpg', 'pdf', 'png', 'xslx'];
 
   // Check if the right request is coming through for the file type
@@ -41,9 +43,11 @@ exports.getFile = (req, res, next) => {
     })
       // Validate if the files exists
       .then((file) => {
+        console.log(`12`, file)
         return new Promise((resolve, reject) => {
-          if (fs.existsSync(`./uploads/${file}`)) {
-            return resolve(`./uploads/${file}`);
+          console.log(`13`, path.join(`${__dirname}/`,'../files'));
+          if (fs.existsSync(path.join(`${__dirname}/`, `../files/${file}`))) {
+            return resolve(path.join(`${__dirname}/`, `../files/${file}`));
           }
           return reject(`File '${file}' was not found.`);
         });
@@ -55,7 +59,7 @@ exports.getFile = (req, res, next) => {
       // Catches errors and displays them
       .catch((e) => {
         res.status(400).send({
-          message: e,
+          message_MINHBB: e,
         });
       })
   );

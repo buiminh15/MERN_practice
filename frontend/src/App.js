@@ -17,7 +17,8 @@ class App extends Component {
       },
       () => {
         Helpers.httpRequest(
-          `http://localhost:5001?file=${this.state.file}`,
+          // `http://localhost:5001?file=${this.state.file}`,
+          `http://localhost:4000/api/v1/sample/download?file=${this.state.file}`,
           'get'
         )
           .then((response) => response.blob())
