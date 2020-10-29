@@ -53,8 +53,8 @@ export default class Card1 extends Component {
 
   render() {
     return (
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={this.props.datas.img} />
+      <Card >
+        {/* <Card.Img variant="top" src={this.props.datas.img} /> */}
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
           <Card.Text>{this.props.datas.description}</Card.Text>
