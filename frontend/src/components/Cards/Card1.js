@@ -13,8 +13,8 @@ export default class Card1 extends Component {
       {
         file: fileName,
       },
-      () =>
-        Helpers.httpRequest(
+      () => {
+        return Helpers.httpRequest(
           // `http://localhost:5001?file=${this.state.file}`,
           `http://localhost:4000/api/v1/sample/download?file=${this.state.file}`,
           'get'
@@ -24,6 +24,7 @@ export default class Card1 extends Component {
             // create blob link
             const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
+            // link.download = `${fileName}`
             link.href = url;
             link.setAttribute('download', `${this.state.file}`);
 
@@ -48,7 +49,7 @@ export default class Card1 extends Component {
               });
             });
           })
-    );
+      });
   };
 
   render() {
