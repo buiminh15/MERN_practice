@@ -8,6 +8,7 @@ class Sample extends Component {
   datas = [
     { img: './logo192.png', description: 'aaaaa', value: 'sample.png' },
     { img: './logo192.png', description: 'aaaaa', value: 'sample.pdf' },
+    { img: './logo192.png', description: 'aaaaa', value: '1.pdf' },
   ];
 
   render() {
