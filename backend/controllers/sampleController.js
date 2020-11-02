@@ -1,4 +1,4 @@
-let path = require("path");
+const path = require("path");
 const fs = require('fs');
 
 exports.getTest = (req, res, next) => {
@@ -9,7 +9,7 @@ exports.uploadFileToFolder = (req, res, next) => {
     console.log('aaa');
     try {
         return res.status(201).json({
-            message: 'File uploded successfully'
+            message: 'File uploaded successfully'
         });
     } catch (error) {
         console.error(error);
@@ -38,6 +38,7 @@ exports.getFile = (req, res, next) => {
       .then((file) => {
         return new Promise((resolve, reject) => {
           if (fs.existsSync(path.join(`${__dirname}/`, `../files/${file}`))) {
+            console.log(path.join(`${__dirname}/`, `../files/${file}`));
             return resolve(path.join(`${__dirname}/`, `../files/${file}`));
           }
           return reject(`File '${file}' was not found.`);
