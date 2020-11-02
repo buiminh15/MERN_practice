@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 import Card1 from '../Cards/Card1';
+import Card2 from '../Cards/Card2';
 
 class Sample extends Component {
   datas = [
@@ -17,6 +18,11 @@ class Sample extends Component {
         <div className="container">
           <div className="row">
             <div className="col col-4">{list}</div>
+          </div>
+          <div className="row">
+            <div className="col col-4">
+              <Card2 />
+            </div>
           </div>
         </div>
       </div>
