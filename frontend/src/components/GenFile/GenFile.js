@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import InputValue from './InputValue';
 import NavbarCustom from './NavbarCustom';
 import { List, ListItem } from '@material-ui/core';
+import InputValue2 from './InputValue2';
 
 export default function GenFile() {
   const [data, setData] = React.useState([]);
@@ -11,7 +12,7 @@ export default function GenFile() {
     var dataCopy = [...data];
     dataCopy.push(
         <ListItem >
-            <InputValue key={dataCopy.length + 1} index={dataCopy.length + 1} />
+            <InputValue2 key={dataCopy.length + 1} index={dataCopy.length + 1} />
         </ListItem>
     );
     setData(dataCopy);
