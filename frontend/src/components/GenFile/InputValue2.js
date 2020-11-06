@@ -36,7 +36,7 @@ export default function InputValue2(props) {
     const handleChange = (event) => {
         setData({
             ...data,
-            [event.currentTarget.name]: event.currentTarget.value 
+            [event.currentTarget.name]: event.currentTarget.value
         })
     }
 
@@ -53,26 +53,32 @@ export default function InputValue2(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <select name="input" value={data.input} onChange={handleChange}>
-                {
-                    inputs.map(val => (
-                        <option value={val.name}>{val.name}</option>
-                    ))
-                }
-            </select>
+        <div>
+            <form>
+                <select name="input" value={data.input} onChange={handleChange}>
+                    {
+                        inputs.map(val => (
+                            <option value={val.name}>{val.name}</option>
+                        ))
+                    }
+                </select>
 
-            <select name="condition" name="" id="" value={data.condition} onChange={handleChange}>
-                {
-                    inputs.find(findObject) && inputs.find(findObject).values_name.map(item => (
-                        <option value={item}>{item}</option>
-                    ))
-                }
-            </select>
+                <select name="condition" name="" id="" value={data.condition} onChange={handleChange}>
+                    {
+                        inputs.find(findObject) && inputs.find(findObject).values_name.map(item => (
+                            <option value={item}>{item}</option>
+                        ))
+                    }
+                </select>
 
-            <input name="value" type="text" value={data.value} onChange={handleChange} placeholder="enter value" />
-            <input name="result" type="text" value={data.result} onChange={handleChange} placeholder="enter result" />
-            <input type="submit" value="Submit" />
-        </form>
+                <input name="value" type="text" value={data.value} onChange={handleChange} placeholder="enter value" />
+                <input name="result" type="text" value={data.result} onChange={handleChange} placeholder="enter result" />
+
+            </form>
+            
+            <input type="button" value="Submit" onClick={handleSubmit}/>
+
+
+        </div>
     );
 }
