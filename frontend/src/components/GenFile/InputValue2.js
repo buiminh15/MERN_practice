@@ -17,21 +17,22 @@ export default function InputValue2(props) {
     const [data, setData] = React.useState({ input: '', condition: '', value: '', result: '' })
     const [datas, setDatas] = React.useState([])
 
-    const handleInput = (event) => {
-        setData({ ...data, input: event.target.value });
-    }
+    // const handleInput = (event) => {
+    //     setData({ ...data, input: event.target.value });
+    // }
 
-    const handleCondition = (event) => {
-        setData({ ...data, condition: event.target.value });
-    }
+    // const handleCondition = (event) => {
+    //     setData({ ...data, condition: event.target.value });
+    // }
 
-    const handleValue = (event) => {
-        setData({ ...data, value: event.target.value })
-    }
+    // const handleValue = (event) => {
+    //     setData({ ...data, value: event.target.value })
+    // }
 
-    const handleResult = (event) => {
-        setData({ ...data, result: event.target.value })
-    }
+    // const handleResult = (event) => {
+    //     setData({ ...data, result: event.target.value })
+    // }
+
 
     const handleChange = (event) => {
         setData({
@@ -77,7 +78,6 @@ export default function InputValue2(props) {
             </form>
             
             <input type="button" value="Submit" onClick={handleSubmit}/>
-
 
         </div>
     );

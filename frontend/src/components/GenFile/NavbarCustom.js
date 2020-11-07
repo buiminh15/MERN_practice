@@ -22,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
 export default function NavbarCustom() {
   const classes = useStyles();
 
+  const handleSave = () => {
+    alert('Save')
+  }
+
+  const handleClear = () => {
+    alert('Clear')
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -35,8 +43,8 @@ export default function NavbarCustom() {
           <Typography variant="h6" className={classes.title}>
             PCL Generate File
           </Typography>
-          <Button color="inherit">Save</Button>
-          <Button color="inherit">Clear</Button>
+          <Button color="inherit" onClick={handleSave}>Save</Button>
+          <Button color="inherit" onClick={handleClear}>Clear</Button>
         </Toolbar>
       </AppBar>
     </div>
