@@ -1,32 +1,89 @@
-export const convertData = (data) => {		
+export const processData = (data) => {
+	var group1 = data.filter(item => item.break === false);
+	var group2 = data.filter(item => item.break === true);
+	
+	var [input1, output1] = convertData(group1);
+	var [input2, output2] = convertData(group2);
+	
+	var text1 = [], cases1 = [[]];
+	var text2 = [], cases2 = [[]];
+	
+	var merged1 = {...input1, ...output1};
+	var merged2 = {...input2, ...output2};
+	
+	viewNode(text1, cases1, merged1, 0, Object.keys(input1).length);
+	viewNode(text2, cases2, merged2, 0, Object.keys(input2).length);
+	
+	// tim vi tri dong result
+	var rsIndex1 = 0, rsIndex2 = 0;
+	var count;
+	for (var i=0, count = 0; i<text1.length; i++) {
+		if (text1[i][0] === '\t') continue;
+		count++;
+		if (count === Object.keys(input1).length + 1) {
+			rsIndex1 = i;
+			break;
+		}
+	}
+	for (var i=0, count = 0; i<text2.length; i++) {
+		if (text2[i][0] === '\t') continue;
+		count++;
+		if (count === Object.keys(input2).length + 1) {
+			rsIndex2 = i;
+			break;
+		}
+	}
+	
+	console.log("===");
+	// hien thi text
+	var text_merged = text1.slice(0, rsIndex1)
+		.concat(text2.slice(0, rsIndex2))
+		.concat(text1.slice(rsIndex1))
+		.concat(text2.slice(rsIndex2))
+		
+	console.log(text_merged.join("\n"));
+	
+	// them dong empty va cases
+	cases1.forEach(item => item.splice(text1.length, 0, ...new Array(text2.length - rsIndex2).fill("0")));
+	cases1.forEach(item => item.splice(rsIndex1, 0, ...new Array(rsIndex2).fill("0")));
+	
+	cases2.forEach(item => item.splice(rsIndex2, 0, ...new Array(text1.length - rsIndex1).fill("0")));
+	cases2.forEach(item => item.splice(0, 0, ...new Array(rsIndex1).fill("0")));
+	
+	// hien thi cases
+	var cases_merged = [].concat(cases1).concat(cases2);
+	var excelCases = [];
+	var len = cases_merged[0].length;
+	for (var i=0; i<len; i++) {
+		var row = "";
+		for (var j=0; j<cases_merged.length; j++) {
+			row += (cases_merged[j][i] === "1" ? "\u25ef" : "") + "\t";
+		}
+		excelCases.push(row);
+	}
+	console.log("===");
+	console.log(excelCases.join("\n"));
+	console.log("===");
+
+}
+
+function convertData(data) {
 	var input = {}
 	var output = {}
 
 	for (var key in data) {
 		var value = data[key];
-		value.result = JSON.parse(value['result'])
 		input[value.name] = {}
 		input[value.name][value.option] = value.value.split(", ");
 		for (var rs_name in value.result) {
 			output[rs_name] = value.result[rs_name].split(", ");
 		}
 	}
-
-	var merge = {
-		...input, ...output
-	}
-	console.log(merge);
-	return merge;
+	
+	return [input, output]
 }
 
-export const getText = (root) => {
-    var text = [];
-    var cases = [[]];
-    viewNode(text, cases, root, 0);
-    return [text, cases];
-}
-
-function viewNode(text, cases, node, tab) {
+function viewNode(text, cases, node, tab, rawConditionIndex) {
     if (Array.isArray(node) || typeof node === "object") {
         for (var key in node) {
             var value = node[key];

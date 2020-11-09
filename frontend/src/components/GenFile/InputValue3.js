@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { convertData, getText } from './process';
+import { processData } from './process';
 
 const inputs = [
     {
@@ -18,25 +18,20 @@ const inputs = [
 export default function InputValue3(props) {
     const [indexes, setIndexes] = React.useState([]);
     const [counter, setCounter] = React.useState(0);
-    const [arrSubmit, setArrSubmit] = React.useState([])
     const { register, errors, handleSubmit } = useForm({
         criteriaMode: "all"
     });
-    
-    const handleAllSubmit = (event) => {
-        event.preventDefault()
-        console.log('handleAllSubmit ', arrSubmit);
-    }
 
     const onSubmit = data => {
         const newData = data['PCL'].map((obj, index) => {
             obj.name = obj.element + ' ' + index
-            return { ...obj, name: obj.name }
-        }
-        )
-        console.log('newData : ', newData);
-        setArrSubmit([newData])
-        
+            var arr = obj.result.split(":")
+            obj.result = "{\"" + arr[0] + "\"" + ":" + "\"" + arr[1] + "\"}"
+            obj.result = JSON.parse(obj.result)
+            return { ...obj, name: obj.name, result: obj.result }
+        })
+        console.log('newData: ', newData);
+        processData(newData)
         // const convertedData = convertData(newData)
         // console.log("===");
         // var [text, cases] = getText(convertedData)
@@ -79,8 +74,8 @@ export default function InputValue3(props) {
     };
 
     return (
-        // <form onSubmit={handleSubmit(onSubmit)}>
-        <form onSubmit={handleAllSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form onSubmit={handleAllSubmit}> */}
             {indexes.map(index => {
                 const fieldName = `PCL[${index}]`;
                 return (
@@ -125,11 +120,16 @@ export default function InputValue3(props) {
                             />
                         </label>
                         {errors.result && "Result is required"}
+                        <label>
+                            Break {index}:
+                            <input
+                                type="checkbox"
+                                name={`${fieldName}.break`}
+                                ref={register()}
+                            />
+                        </label>
                         <button type="button" onClick={removeFriend(index)}>
                             Remove
-                        </button>
-                        <button type="button" onClick={handleSubmit(onSubmit)}>
-                            Break
                         </button>
                     </fieldset>
                 );
