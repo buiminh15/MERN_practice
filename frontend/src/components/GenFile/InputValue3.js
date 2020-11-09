@@ -65,17 +65,12 @@ export default function InputValue3(props) {
         setCounter(prevCounter => prevCounter - 1);
     };
 
-    const breakFriend = (data) => {
-        console.log('button clicked ', data);
-    }
-
     const clearFriends = () => {
         setIndexes([]);
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <form onSubmit={handleAllSubmit}> */}
             {indexes.map(index => {
                 const fieldName = `PCL[${index}]`;
                 return (
@@ -100,6 +95,14 @@ export default function InputValue3(props) {
                             />
                         </label>
                         {errors.option && "Option is required"}
+                        <label>
+                            Key {index}:
+                            <input
+                                type="text"
+                                name={`${fieldName}.key`}
+                                ref={register({ required: true })}
+                            />
+                        </label>
                         <label>
                             Value {index}:
                             <input

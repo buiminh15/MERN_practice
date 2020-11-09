@@ -74,7 +74,7 @@ function convertData(data) {
 	for (var key in data) {
 		var value = data[key];
 		input[value.name] = {}
-		input[value.name][value.option] = value.value.split(", ");
+		input[value.name][value.key] = value.value.split(", ");
 		for (var rs_name in value.result) {
 			output[rs_name] = value.result[rs_name].split(", ");
 		}
