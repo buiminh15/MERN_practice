@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { convertData, getText } from './process';
+
 const inputs = [
     {
         name: 'input',
@@ -17,9 +18,15 @@ const inputs = [
 export default function InputValue3(props) {
     const [indexes, setIndexes] = React.useState([]);
     const [counter, setCounter] = React.useState(0);
+    const [arrSubmit, setArrSubmit] = React.useState([])
     const { register, errors, handleSubmit } = useForm({
         criteriaMode: "all"
     });
+    
+    const handleAllSubmit = (event) => {
+        event.preventDefault()
+        console.log('handleAllSubmit ', arrSubmit);
+    }
 
     const onSubmit = data => {
         const newData = data['PCL'].map((obj, index) => {
@@ -27,27 +34,29 @@ export default function InputValue3(props) {
             return { ...obj, name: obj.name }
         }
         )
-        console.log('newData: ', newData);
-        const convertedData = convertData(newData)
-        console.log("===");
-        var [text, cases] = getText(convertedData)
+        console.log('newData : ', newData);
+        setArrSubmit([newData])
+        
+        // const convertedData = convertData(newData)
+        // console.log("===");
+        // var [text, cases] = getText(convertedData)
 
-        // hien thi text
-        console.log(text.join("\n"));
+        // // hien thi text
+        // console.log(text.join("\n"));
 
-        // chuyen cases thanh tick va tab
-        var excelCases = [];
-        var len = cases[0].length;
-        for (var i = 0; i < len; i++) {
-            var row = "";
-            for (var j = 0; j < cases.length; j++) {
-                row += (cases[j][i] === "1" ? "\u25ef" : "") + "\t";
-            }
-            excelCases.push(row);
-        }
-        console.log("===");
-        console.log(excelCases.join("\n"));
-        console.log("===");
+        // // chuyen cases thanh tick va tab
+        // var excelCases = [];
+        // var len = cases[0].length;
+        // for (var i = 0; i < len; i++) {
+        //     var row = "";
+        //     for (var j = 0; j < cases.length; j++) {
+        //         row += (cases[j][i] === "1" ? "\u25ef" : "") + "\t";
+        //     }
+        //     excelCases.push(row);
+        // }
+        // console.log("===");
+        // console.log(excelCases.join("\n"));
+        // console.log("===");
 
     };
 
@@ -61,12 +70,17 @@ export default function InputValue3(props) {
         setCounter(prevCounter => prevCounter - 1);
     };
 
+    const breakFriend = (data) => {
+        console.log('button clicked ', data);
+    }
+
     const clearFriends = () => {
         setIndexes([]);
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        // <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleAllSubmit}>
             {indexes.map(index => {
                 const fieldName = `PCL[${index}]`;
                 return (
@@ -113,7 +127,10 @@ export default function InputValue3(props) {
                         {errors.result && "Result is required"}
                         <button type="button" onClick={removeFriend(index)}>
                             Remove
-              </button>
+                        </button>
+                        <button type="button" onClick={handleSubmit(onSubmit)}>
+                            Break
+                        </button>
                     </fieldset>
                 );
             })}
