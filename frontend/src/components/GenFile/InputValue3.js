@@ -30,28 +30,14 @@ export default function InputValue3(props) {
             obj.result = JSON.parse(obj.result)
             return { ...obj, name: obj.name, result: obj.result }
         })
-        console.log('newData: ', newData);
-        processData(newData)
-        // const convertedData = convertData(newData)
-        // console.log("===");
-        // var [text, cases] = getText(convertedData)
+        //console.log('newData: ', newData);
+        const [text_merged, excelCases] = processData(newData)
 
-        // // hien thi text
-        // console.log(text.join("\n"));
-
-        // // chuyen cases thanh tick va tab
-        // var excelCases = [];
-        // var len = cases[0].length;
-        // for (var i = 0; i < len; i++) {
-        //     var row = "";
-        //     for (var j = 0; j < cases.length; j++) {
-        //         row += (cases[j][i] === "1" ? "\u25ef" : "") + "\t";
-        //     }
-        //     excelCases.push(row);
-        // }
-        // console.log("===");
-        // console.log(excelCases.join("\n"));
-        // console.log("===");
+        console.log("===");
+        console.log(text_merged.join("\n"));
+        console.log("===");
+        console.log(excelCases.join("\n"));
+        console.log("===");
 
     };
 
