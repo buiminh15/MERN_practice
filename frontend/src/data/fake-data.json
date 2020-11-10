@@ -1,0 +1,75 @@
+{
+    "id": 1,
+    "elements": {
+        "input": {
+            "max-length": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} c? t?i ?a l? {1} k? t?",
+                        "{0} c? tr?n {1} k? t?"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "test_jp01",
+                        "test_jp02",
+                        "test_jp03",
+                        "test_jp04"
+                    ]
+                }
+            ],
+            "min-length": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} c? t?i thi?u l? {1} k? t?",
+                        "{0} c? d??i {1} k? t?"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "test_jp01",
+                        "test_jp02",
+                        "test_jp03",
+                        "test_jp04"
+                    ]
+                }
+            ]
+        },
+        "checkbox": {
+            "checked": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} c? tr?ng th?i l? checked"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "test_jp01",
+                        "test_jp02"
+                    ]
+                }
+            ],
+            "uncheck": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} c? tr?ng th?i l? uncheck"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "test_jp01",
+                        "test_jp02"
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,10 +1,15 @@
 export const processData = (data) => {
-	var group1 = data.filter(item => item.break === false);
-	var group2 = data.filter(item => item.break === true);
+	var group1 = data.filter(item => item.group === 'group1');
+	var group2 = data.filter(item => item.group === 'group2');
+	var group3 = data.filter(item => item.group === 'group3');
+	var group4 = data.filter(item => item.group === 'group4');
 
-	var [input1, output1] = convertData(group1);
-	var [input2, output2] = convertData(group2);
-
+	if (group1.length !== 0 || group2.length !== 0 || group3.length !== 0 || group4.length !== 0 ) {
+		var [input1, output1] = convertData(group1);
+		var [input2, output2] = convertData(group2);
+		var [input3, output3] = convertData(group3);
+		var [input4, output4] = convertData(group4);
+	}
 	var text1 = [], cases1 = [[]];
 	var text2 = [], cases2 = [[]];
 

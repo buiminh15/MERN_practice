@@ -30,14 +30,14 @@ export default function InputValue3(props) {
             obj.result = JSON.parse(obj.result)
             return { ...obj, name: obj.name, result: obj.result }
         })
-        //console.log('newData: ', newData);
-        const [text_merged, excelCases] = processData(newData)
+        console.log('newData: ', newData);
+        // const [text_merged, excelCases] = processData(newData)
 
-        console.log("===");
-        console.log(text_merged.join("\n"));
-        console.log("===");
-        console.log(excelCases.join("\n"));
-        console.log("===");
+        // console.log("===");
+        // console.log(text_merged.join("\n"));
+        // console.log("===");
+        // console.log(excelCases.join("\n"));
+        // console.log("===");
 
     };
 
@@ -109,13 +109,26 @@ export default function InputValue3(props) {
                             />
                         </label>
                         {errors.result && "Result is required"}
-                        <label>
+                        {/* <label>
                             Break {index}:
                             <input
                                 type="checkbox"
                                 name={`${fieldName}.break`}
                                 ref={register()}
                             />
+                        </label> */}
+                        <label>
+                            Break {index}:
+                            <select
+                                type="text"
+                                name={`${fieldName}.group`}
+                                ref={register({ required: true })}
+                            >
+                                <option value="group1">Group 1</option>
+                                <option value="group2">Group 2</option>
+                                <option value="group3">Group 3</option>
+                                <option value="group4">Group 4</option>
+                            </select>
                         </label>
                         <button type="button" onClick={removeFriend(index)}>
                             Remove
