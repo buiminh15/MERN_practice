@@ -34,9 +34,9 @@ export default function InputValue3(props) {
         const [text_merged, excelCases] = processData(newData)
 
         console.log("===");
-        console.log(text_merged.join("\n"));
+        console.log('text_merged ',text_merged);
         console.log("===");
-        console.log(excelCases.join("\n"));
+        console.log('excelCases ',excelCases);
         console.log("===");
 
     };

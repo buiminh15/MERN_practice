@@ -95,7 +95,7 @@ function viewNode(text, cases, node, tab, rawConditionIndex) {
 				dupCases(cases, value.length - 1);
 				for (var index in value) {
 					var item = value[index];
-					text.push("\t".repeat(tab) + key + " is " + item);
+					text.push("\t".repeat(tab) + key + " :: " + item);
 					addCases(cases, +index, step);
 				}
 			} else if (typeof value === "object") {
@@ -105,7 +105,7 @@ function viewNode(text, cases, node, tab, rawConditionIndex) {
 				viewNode(text, cases, value, tab + 1);
 
 			} else {
-				text.push("\t".repeat(tab) + key + " is " + value);
+				text.push("\t".repeat(tab) + key + " :: " + value);
 				var step = cases.length;
 				addCases(cases, -1, step);
 			}
