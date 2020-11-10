@@ -1,0 +1,69 @@
+{
+    "id": 1,
+    "elements": {
+        "input": {
+            "max-length": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} has {1} chacracters",
+                        "{0} has over {1} chacracters"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "{0} has {1} chacracters",
+                        "{0} has over {1} chacracters"
+                    ]
+                }
+            ],
+            "min-length": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} has minimum {1} chacracters",
+                        "{0} has under {1} chacracters"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "{0} has minimum {1} chacracters",
+                        "{0} has under over {1} chacracters"
+                    ]
+                }
+            ]
+        },
+        "checkbox": {
+            "checked": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} has checked"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "{0} has checked"
+                    ]
+                }
+            ],
+            "uncheck": [
+                {
+                    "lang": "vi",
+                    "data": [
+                        "{0} has uncheck"
+                    ]
+                },
+                {
+                    "lang": "jp",
+                    "data": [
+                        "{0} has uncheck"
+                    ]
+                }
+            ]
+        }
+    }
+}
