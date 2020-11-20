@@ -41,7 +41,7 @@ export default function TextGenerator() {
 
   const [options, setOptions] = useState(optionsValues);
   const [option, setOption] = useState(options[0]);
-  const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(1)
   const [result, setResult] = useState('');
   console.log('init number: ', number)
   const getResult = (event) => {
@@ -84,9 +84,9 @@ export default function TextGenerator() {
   return (
     <div>
       <section>
-        <div class="inner">
-          <h1 class="s-title">{feature.title}</h1>
-          <h2 class="s-sub-title">{feature.subTitle}</h2>
+        <div className="inner">
+          <h1 className="s-title">{feature.title}</h1>
+          <h2 className="s-sub-title">{feature.subTitle}</h2>
           <form onSubmit={e => getResult(e)}>
             <div>
               <label>
