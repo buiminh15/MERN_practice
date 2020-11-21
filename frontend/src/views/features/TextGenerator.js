@@ -9,6 +9,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useEffect } from 'react';
 import { featureMixin } from '../../mixins/feature';
 import { features } from '../../models/features'
+
 export default function TextGenerator() {
   const init = {
     number: null,
@@ -20,7 +21,6 @@ export default function TextGenerator() {
   }
   const lorem = new LoremIpsum();
   const feature = features.filter(item => item.name === 'text-generator')[0]
-
   const optionsValues = [
     'Characters',
     '2-byte Hiragana Characters',
@@ -101,7 +101,6 @@ export default function TextGenerator() {
                 options={options}
                 onChange={(e) => setOption(e.value)}
                 value={options[0]}
-                placeholder="Select an option"
               />
               <button type="submit">Generate</button>
             </div>

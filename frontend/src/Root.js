@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { features } from './models/features'
 import App from './App';
-import TextGenerator from './views/features/TextGenerator';
 import Home from './views/Home';
 
 const Root = (props) => {
@@ -11,7 +10,10 @@ const Root = (props) => {
       <App>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/text-generator/" component={TextGenerator} />
+          {
+            features.map(feature => <Route key={feature.name} path={feature.path} component={feature.component} />)
+          }
+
         </Switch>
       </App>
     </Router>

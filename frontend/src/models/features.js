@@ -1,3 +1,12 @@
+import CaseConverter from '../views/features/CaseConverter'
+import DataComparer from '../views/features/DataComparer'
+import DataGenerator from '../views/features/DataGenerator'
+import FileGenerator from '../views/features/FileGenerator'
+import GuidGenerator from '../views/features/GuidGenerator'
+import PairwiseGenerator from '../views/features/PairwiseGenerator'
+import PictureGenerator from '../views/features/PictureGenerator'
+import TextGenerator from '../views/features/TextGenerator'
+
 export const features = [{
     title: "Data generator",
     subTitle: "Create any data sets you need",
@@ -17,7 +26,7 @@ export const features = [{
         tag: "This Generator will allow you to create any data you may need for your testing purposes. " +
             "For example, if you need to create a body for your API request, this Generator will do it for you in seconds!"
     },
-    // component: DataGenerator
+    component: DataGenerator
 },
 {
     title: "Pairwise generator",
@@ -41,7 +50,7 @@ export const features = [{
         tag: "Pairwise Testing - is an online tool for checking possible discrete combinations of parameters. " +
             "Using combinatorial testing, you can easily and quickly test any system."
     },
-    // component: PairwiseGenerator
+    component: PairwiseGenerator
 },
 {
     title: "GUID generator",
@@ -62,7 +71,7 @@ export const features = [{
         tag: "You can use the GUID for your own purposes, for example, " +
             "like this: row identifier in the database, entity identifier, serial number of something."
     },
-    // component: GuidGenerator
+    component: GuidGenerator
 },
 {
     title: "Random text generator",
@@ -82,7 +91,7 @@ export const features = [{
         title: "Random text generator - Fast random text for web or typography",
         tag: "This text generator will allow you to create a dummy text that you can use for testing any software."
     },
-    // component: TextGenerator
+    component: TextGenerator
 },
 {
     title: "Case converter",
@@ -104,7 +113,7 @@ export const features = [{
         tag: "Convert case online allows you to translate text in lower case, " +
             "in uppercase online, make each word in a sentence with a capital letter."
     },
-    // component: CaseConverter
+    component: CaseConverter
 },
 {
     title: "Random file generator",
@@ -124,7 +133,7 @@ export const features = [{
         title: "File generator - Create random dummy files with a specific size",
         tag: "This generator will create a file with your specific needs. Use our generator instead of wasting your time by looking for the files you need."
     },
-    // component: FileGenerator
+    component: FileGenerator
 },
 {
     title: "Image generator",
@@ -147,7 +156,7 @@ export const features = [{
         tag: "With the help of the Image generator, you can create any fake photo free online. " +
             "The service allows you to make a picture of any size and format for download."
     },
-    // component: PictureGenerator
+    component: PictureGenerator
 },
 {
     title: "Data comparer",
@@ -166,7 +175,7 @@ export const features = [{
         title: "Data comparer - Diff tool to compare your data free and online",
         tag: "With the help of the Data comparer, you can compare data online in JSON, XML, CSV, YAML, TXT, ARRAY, CSS formats and find differences between them. It's a free and online tool."
     },
-    // component: DataComparer
+    component: DataComparer
 }
 ];
 
