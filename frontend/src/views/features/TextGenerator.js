@@ -3,34 +3,28 @@ import { LoremIpsum } from 'lorem-ipsum';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import TextareaAutosize from 'react-textarea-autosize';
-
+import { FaCopy, FaSave } from 'react-icons/fa';
+import { AiFillDelete } from "react-icons/ai";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useEffect } from 'react';
+import { featureMixin } from '../../mixins/feature';
+import { features } from '../../models/features'
 export default function TextGenerator() {
+  const init = {
+    number: null,
+    maxNumberForTextArea: 10000,
+    maxNumber: 100000,
+    entity: "Characters",
+    result: "",
+    isCopied: false
+  }
   const lorem = new LoremIpsum();
-  const feature = {
-    title: 'Random text generator',
-    subTitle: 'Create dummy text for all your layout needs',
-    description:
-      'This generator allows to generate random text for testing purposes. ' +
-      'If you are the QA Engineer, you, probably, have needed at least once to paste any dummy text to test ' +
-      'the field in the site, or to test any function, or feature, etc. It takes time to find any random text with exact ' +
-      'symbols or words you need. But with our generator you can create random text in several seconds. ' +
-      'Usually, the most often used dummy text is the text which begins with "Lorem Ipsum". ' +
-      'We use this text for our generator too. All our generators are created by testers, so we ' +
-      'truly believe that this random symbols generator will save your time.',
-    icon: ['fas', 'pen-square'],
-    path: '/text-generator/',
-    name: 'text-generator',
-    meta: {
-      layout: 'main',
-      title: 'Random text generator - Fast random text for web or typography',
-      tag:
-        'This text generator will allow you to create a dummy text that you can use for testing any software.',
-    },
-    component: TextGenerator,
-  };
+  const feature = features.filter(item => item.name === 'text-generator')[0]
 
   const optionsValues = [
     'Characters',
+    '2-byte Hiragana Characters',
+    '2-byte Katakana Characters',
     'Numbers',
     'Symbols',
     'Mixed',
@@ -41,19 +35,34 @@ export default function TextGenerator() {
 
   const [options, setOptions] = useState(optionsValues);
   const [option, setOption] = useState(options[0]);
-  const [number, setNumber] = useState(1)
-  const [result, setResult] = useState('');
-  console.log('init number: ', number)
+  const [number, setNumber] = useState(init.number)
+  const [result, setResult] = useState(init.result);
+  const [copied, setCopied] = useState(init.isCopied)
+  useEffect(() => {
+    setTimeout(() => setCopied(false), 2000)
+  }, [copied])
+
   const getResult = (event) => {
-      event.preventDefault()
+    event.preventDefault()
+    let resultA = ''
+    if (number <= init.maxNumber) {
       const result = generateString()
-      console.log('getResult :', result);
-      setResult(result)
+      if (number > init.maxNumberForTextArea) {
+        featureMixin.methods.downloadFileFromClient("result.txt", result)
+      } else {
+        resultA = result
+      }
+    }
+    setResult(resultA)
   }
 
   const generateString = () => {
     if (option === 'Characters') {
       return generate('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    } else if (option === '2-byte Hiragana Characters') {
+      return generate('あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわを');
+    } else if (option === '2-byte Katakana Characters') {
+      return generate('アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲ');
     } else if (option === 'Numbers') {
       return generate('0123456789');
     } else if (option === 'Symbols') {
@@ -72,13 +81,9 @@ export default function TextGenerator() {
   };
 
   const generate = (values) => {
-      console.log('generate ', values);
-      console.log(number)
-      let aa = [...Array(number)]
-        .map((_) => values[~~(Math.random() * values.length)])
-        .join('');
-        console.log(aa)
-    return aa;
+    return [...Array(number)]
+      .map((_) => values[~~(Math.random() * values.length)])
+      .join('');
   };
 
   return (
@@ -90,7 +95,7 @@ export default function TextGenerator() {
           <form onSubmit={e => getResult(e)}>
             <div>
               <label>
-                <input required placeholder="Number" type="number" onChange={e => setNumber( e.target.value)}/>
+                <input required max={init.maxNumber} placeholder="Number" type="number" onChange={e => setNumber(+e.target.value)} />
               </label>
               <Dropdown
                 options={options}
@@ -100,6 +105,10 @@ export default function TextGenerator() {
               />
               <button type="submit">Generate</button>
             </div>
+            {
+              number > init.maxNumberForTextArea && number <= init.maxNumber &&
+              <span>You have indicated the quantity more than {init.maxNumberForTextArea} so the result will be downloaded.</span>
+            }
             <div>
               <TextareaAutosize
                 placeholder="The result appears here..."
@@ -108,7 +117,29 @@ export default function TextGenerator() {
                 value={result}
               />
             </div>
+            <div>
+              <div>
+                <span className="border-line">Character Count: {result.length}</span>
+                <span className="border-line">Word Count: {result ? result.trim().split(/\s+/).length : 0}</span>
+                <span>Line Count: {result ? result.split(/\r\n|\r|\n/).length : 0}</span>
+              </div>
+              <div>
+                <span onClick={() => featureMixin.methods.downloadFileFromClient('text.txt', result)}>
+                  <FaSave />
+                </span>
+                <CopyToClipboard text={result}
+                  onCopy={() => setCopied(true)}>
+                  <span><FaCopy /></span>
+                </CopyToClipboard>
+                {copied ?
+                  <span style={{ color: 'red' }}>Copied.</span> : null}
+                <span onClick={() => setResult('')}>
+                  <AiFillDelete />
+                </span>
+              </div>
+            </div>
           </form>
+          <p className="s-description">{feature.description}</p>
         </div>
       </section>
     </div>
