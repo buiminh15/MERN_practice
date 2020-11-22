@@ -95,7 +95,7 @@ export default function TextGenerator() {
           <form onSubmit={e => getResult(e)}>
             <div>
               <label>
-                <input required max={init.maxNumber} placeholder="Number" type="number" onChange={e => setNumber(+e.target.value)} />
+                <input required min="1" step="1" max={init.maxNumber} placeholder="Number" type="number" onChange={e => setNumber(+e.target.value)} />
               </label>
               <Dropdown
                 options={options}

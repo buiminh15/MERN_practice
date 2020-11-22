@@ -10,7 +10,7 @@ export default function Home() {
                     <ul>
                         <li><Link to='/'>Home</Link></li>
                         {
-                            features.map(feature => <li><Link to={feature.path}>{feature.name}</Link></li>)
+                            features.map(feature => <li><Link key={feature.name} to={feature.path}>{feature.name}</Link></li>)
                         }
                     
                     </ul>
