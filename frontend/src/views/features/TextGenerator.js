@@ -25,6 +25,7 @@ export default function TextGenerator() {
     'Characters',
     '2-byte Hiragana Characters',
     '2-byte Katakana Characters',
+    '1-byte Katakana Characters',
     'Numbers',
     'Symbols',
     'Mixed',
@@ -63,6 +64,8 @@ export default function TextGenerator() {
       return generate('あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわを');
     } else if (option === '2-byte Katakana Characters') {
       return generate('アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲ');
+    } else if (option === '1-byte Katakana Characters') {
+      return generate('ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦ');
     } else if (option === 'Numbers') {
       return generate('0123456789');
     } else if (option === 'Symbols') {
