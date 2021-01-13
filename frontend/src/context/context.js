@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { features } from '../models/features';
 import reducer from '../redux/reducer';
 import { DELETE_TEXTS, SET_CONTENT, HANDLE_COPY } from '../redux/actions';
 
@@ -8,6 +9,7 @@ const initialState = {
   number: null,
   maxNumberForTextArea: 10000,
   maxNumber: 100000,
+  fileSize: '0'
 };
 
 const AppContext = React.createContext();
@@ -27,10 +29,12 @@ const AppProvider = ({ children }) => {
   const handleState = (type, content) => {
     dispatch({ type: type, payload: content });
   };
-
+  const getFeature = (category) => {
+    return features.filter((item) => item.name === category)[0];
+  }
   return (
     <AppContext.Provider
-      value={{ ...state, handleState, deleteTexts, handleCopy }}
+      value={{ ...state, handleState, deleteTexts, handleCopy, getFeature }}
     >
       {children}
     </AppContext.Provider>

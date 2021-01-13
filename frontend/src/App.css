@@ -168,7 +168,7 @@ p {
 .s-sub-title {
   font-size: 0.8em;
 }
-.dropdown {
+.dropdown-custom {
   border-radius: 4px!important;
   width: fit-content;
   min-width: 200px;
@@ -176,6 +176,7 @@ p {
 
 .input {
   border-radius: 4px;
+  padding-left: 5px;
 }
 
 .textarea {
@@ -196,5 +197,13 @@ p {
   position: absolute;
   color: red;
   bottom: 100%;
+}
+
+.file-gen-center-items {
+  width: 40%;
+}
+
+.center {
+  margin: 0 auto;
 }
 
