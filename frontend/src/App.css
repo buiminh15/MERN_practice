@@ -3,7 +3,7 @@
 Fonts
 ===============
 */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap");
 
 /*
 =============== 
@@ -38,8 +38,8 @@ Variables
   --clr-grey-9: hsl(212, 33%, 89%);
   --clr-grey-10: hsl(210, 36%, 96%);
   --clr-white: #fff;
-  --ff-primary: 'Roboto', sans-serif;
-  --ff-secondary: 'Open Sans', sans-serif;
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Open Sans", sans-serif;
   --transition: all 0.3s linear;
   --spacing: 0.25rem;
   --radius: 0.5rem;
@@ -141,9 +141,9 @@ p {
 }
 /*  global classes */
 .form-bg {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   border-radius: 4px;
-  padding: 20px 15px
+  padding: 20px 15px;
 }
 
 .header-wrapper {
@@ -169,7 +169,7 @@ p {
   font-size: 0.8em;
 }
 .dropdown {
-  border-radius: 4px!important;
+  border-radius: 4px !important;
   width: fit-content;
   min-width: 200px;
 }
@@ -197,4 +197,32 @@ p {
   color: red;
   bottom: 100%;
 }
-
+.data-comparer-height {
+  height: 50vh;
+}
+.data-comparer-textarea {
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: #000;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: textarea;
+  background-color: #FDF2E9;
+  -webkit-rtl-ordering: logical;
+  flex-direction: column;
+  resize: auto;
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  margin: 0em;
+  font: 400 13.3333px Arial;
+  border-width: 1px;
+  border-style: solid;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+}

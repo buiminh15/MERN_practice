@@ -8,6 +8,11 @@ const initialState = {
   number: null,
   maxNumberForTextArea: 10000,
   maxNumber: 100000,
+  initFormatDataComparer: "JSON",
+  firstDataComparer: "",
+  secondDataComparer: "",
+  amountAddedDataComparer: null,
+  amountDeletedDataComparer: null,
 };
 
 const AppContext = React.createContext();
