@@ -9,7 +9,19 @@ const initialState = {
   number: null,
   maxNumberForTextArea: 10000,
   maxNumber: 100000,
-  fileSize: '0'
+  // data comparer
+  initFormatData: 'JSON',
+  firstDataComparer: '',
+  secondDataComparer: '',
+  amountAddedDataComparer: null,
+  amountDeletedDataComparer: null,
+  // file generator
+  items: [{ size: '', unit: 'Bytes' }],
+  unit: { byte: 1, kByte: 1024, mByte: 1024 ** 2, gByte: 1024 ** 3 },
+  isFileSizeExceeded: false,
+  isFileGenerating: false,
+  initFormatFile: 'TXT',
+  fileName: '',
 };
 
 const AppContext = React.createContext();

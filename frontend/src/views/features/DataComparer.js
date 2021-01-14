@@ -1,27 +1,43 @@
 import React, { useState } from 'react'
 import Dropdown from 'react-dropdown';
-import { features } from '../../models/features'
-import TextareaAutosize from 'react-textarea-autosize';
 import { diffJson, diffLines, diffWords, diffArrays, diffCss } from "diff";
+import { useGlobalContext } from '../../context/context';
+import Header from '../components/common/Header';
+import { useEffect } from 'react';
+import { CATEGORY } from '../components/common/constant';
 
 export default function DataComparer() {
-    var init = {
-        format: "JSON",
-        firstData: "",
-        secondData: "",
-        amountAdded: null,
-        amountDeleted: null,
-    }
-    var feature = features.filter(item => item.name === 'data-comparer')[0]
+    var {
+      initFormatData,
+      firstDataComparer,
+      secondDataComparer,
+      amountAddedDataComparer,
+      amountDeletedDataComparer,
+      handleState,
+      content,
+      getFeature,
+    } = useGlobalContext();
+
+    const feature = getFeature(CATEGORY.DATA_COMPARER);
     var optionsValues = [
         'JSON', 'XML', 'CSV', 'YAML', 'TXT', 'ARRAY', 'CSS'
     ];
-    var [options, setOptions] = useState(optionsValues);
-    var [format, setFormat] = useState(options[0]);
-    var [firstData, setFirstData] = useState(init.firstData);
-    var [secondData, setSecondData] = useState(init.secondData);
-    var [amountAdded, setAmountAdded] = useState(init.amountAdded);
-    var [amountDeleted, setAmountDeleted] = useState(init.amountDeleted);
+    var [option, setOption] = useState(optionsValues[0]);
+    var [firstData, setFirstData] = useState(firstDataComparer);
+    var [secondData, setSecondData] = useState(secondDataComparer);
+    var [amountAdded, setAmountAdded] = useState(amountAddedDataComparer);
+    var [amountDeleted, setAmountDeleted] = useState(amountDeletedDataComparer);
+    var [isDisable, setIsDisable] = useState(true);
+
+    useEffect(() => {
+        if (firstData && secondData) {
+            setIsDisable(false)
+        } else {
+            setIsDisable(true)
+            var result = document.getElementById("result");
+            result.textContent = "";
+        }
+    }, [firstData, secondData])
 
     var compare = (e) => {
         e.preventDefault()
@@ -47,84 +63,80 @@ export default function DataComparer() {
     }
 
     var getDiff = () => {
-        console.log('firstData ', firstData);
-        console.log('secondData ', secondData);
-        if (format === "JSON") {
+        if (option === "JSON") {
             return diffJson(firstData, secondData);
-        } else if (format === "XML" || format === "YAML") {
+        } else if (option === "XML" || option === "YAML") {
             return diffLines(firstData, secondData);
-        } else if (format === "CSV" || format === "TXT") {
+        } else if (option === "CSV" || option === "TXT") {
             return diffWords(firstData, secondData);
-        } else if (format === "ARRAY") {
+        } else if (option === "ARRAY") {
             return diffArrays(firstData, secondData);
-        } else if (format === "CSS") {
+        } else if (option === "CSS") {
             return diffCss(firstData, secondData);
         }
     }
 
     return (
-        <div>
-            <section>
-                <div>
-                    <h1 className="s-title">{feature.title}</h1>
-                    <h2 className="s-sub-title">{feature.subTitle}</h2>
+        <>
+            <Header />
+            <div>
+                <div className="container">
+                    <h1 className="s-title text-center text-capitalize">
+                        {feature.title}
+                    </h1>
+                    <h2 className="s-sub-title text-center text-capitalize">
+                        {feature.subTitle}
+                    </h2>
+                    <form className="form-bg" onSubmit={compare}>
+                        <div className="pl-15">
+                            <div className="row">
+                                <Dropdown
+                                    options={optionsValues}
+                                    onChange={(e) => setOption(e.value)}
+                                    value={option}
+                                    className="dropdown mx-3"
+                                />
+                                <button type="submit" className="btn btn-primary" disabled={isDisable}>
+                                    Compare
+                                </button>
+                            </div>
+                        </div>
+                        <div className="d-block my-4">
+                            <div className="row">
+                                <div className="col">
+                                    <textarea
+                                        placeholder="Type your data here..."
+                                        value={firstData}
+                                        onChange={e => setFirstData(e.target.value)}
+                                        className="textarea data-comparer-height"
+                                    />
+                                </div>
+                                <div className="col">
+                                    <textarea
+                                        placeholder="Type your data here..."
+                                        value={secondData}
+                                        onChange={e => setSecondData(e.target.value)}
+                                        className="textarea data-comparer-height"
+                                    />
+                                </div>
+                                {/* <div className="col">
+                                    <textarea
+                                        placeholder=""
+                                        value={content}
+                                        className="textarea data-comparer-height"
+                                    />
+                                </div> */}
+                                <div className="col">
+                                    <pre id="result" className="textarea data-comparer-textarea data-comparer-height"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div className="my-5">
+                        <p className="s-description">{feature.description}</p>
+                    </div>
                 </div>
-                <form onSubmit={e => compare(e)}>
-                    <div>
-                        <div>
-                            <Dropdown
-                                options={options}
-                                onChange={(e) => setFormat(e.value)}
-                                value={options[0]}
-                            />
-                            <button type="submit">Compare</button>
-                        </div>
-                        <div className="s-margin-between-elems">
-                            {/* {
-                                amountAdded || amountDeleted &&
-                                <span className="s-warning-message">
-                                    Value added: {amountAdded} | Value deleted: {amountDeleted}
-                                </span>
-                            } */}
-                            {
-                                amountAdded === 0 && amountDeleted === 0 ?
-                                    <span
-                                        className="s-warning-message">
-                                        Data are semantically identical
-                                </span> :
-                                    <span className="s-warning-message">
-                                        Value added: {amountAdded} | Value deleted: {amountDeleted}
-                                    </span>
-                            }
-
-                        </div>
-                    </div>
-                    <div className="data-blocks s-sub-block">
-                        <div className="data-block">
-                            <TextareaAutosize
-                                id="firstData"
-                                onChange={(e) => setFirstData(e.target.value)}
-                                value={firstData}
-                                className="s-textarea"
-                                placeholder="Type your data here..."
-                            ></TextareaAutosize>
-                        </div>
-                        <div className="data-block">
-                            <TextareaAutosize
-                                id="secondData"
-                                onChange={(e) => setSecondData(e.target.value)}
-                                value={secondData}
-                                className="s-textarea"
-                                placeholder="Type your data here..."
-                            ></TextareaAutosize>
-                        </div>
-                        <div className="data-block">
-                            <pre id="result" className="s-element"></pre>
-                        </div>
-                    </div>
-                </form>
-                <p className="s-description">{feature.description}</p>
-            </section >
-        </div >
+            </div>
+        </>
     )
 }

@@ -3,32 +3,86 @@ import { useGlobalContext } from '../../context/context';
 import { CATEGORY } from '../components/common/constant';
 import Header from '../components/common/Header';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import { TestFileGenerator } from 'test-file-generator';
+import { AiFillDelete } from 'react-icons/ai';
+import { featureMixin } from '../../mixins/feature';
 
 export default function FileGenerator() {
   var {
-    fileSize,
-    isCopied,
-    handleState,
-    deleteTexts,
-    handleCopy,
+    fileName,
+    format,
+    items,
+    unit,
+    isFileSizeExceeded,
+    isFileGenerating,
     getFeature,
   } = useGlobalContext();
   const feature = getFeature(CATEGORY.FILE_GENERATOR);
   const optionsValues = ['TXT', 'DOC'];
   const optionsUnitValues = ['Bytes', 'KBytes', 'MBytes'];
-  const [option, setOption] = useState(optionsValues[0]);
-  const [optionUnit, setOptionUnit] = useState(optionsUnitValues[0]);
+  var [itemsArr, setItemsArr] = useState(items);
+  var [option, setOption] = useState(optionsValues[0]);
+  var [optionUnit, setOptionUnit] = useState(optionsUnitValues[0]);
+  const handleSubmit = () => {};
+  
+  const generate = async () => {
+    isFileGenerating = true;
+    // let finalFileName = fileName
+    //   ? `${fileName}.${format.toLowerCase()}`
+    //   : `file.${format.toLowerCase()}`;
+    // const response = await request.post("/api/file", {size: convertFileSizeToBytes});
+    // isFileGenerating = false;
+    // if (response.status === 200) {
+    //   downloadFileFromServer(finalFileName, response);
+    // }
+  };
+  const deleteItemFromList = (list, id, defaultValue) => {
 
-  const handleSubmit = () => {
-    let generator = new TestFileGenerator('txt');
-    generator.generateFile();
-    // generator.setLocation('src/output/');
-    generator.setSize(3000);
-    generator.setName('my_file_name');
-    generator.generateFile();
+            if (list.length > 1) {
+                setItemsArr(list.splice(id, 1));
+            } else if (defaultValue) {
+                list.pop();
+                list.push(defaultValue);
+            }
+        }
+  const convertItemSizeToBytes = (item) => {
+    if (item.unit === 'Bytes') {
+      return +item.size;
+    } else if (item.unit === 'KBytes') {
+      return +item.size * unit.kByte;
+    } else if (item.unit === 'MBytes') {
+      return +item.size * unit.mByte;
+    }
   };
 
+  const convertFileSizeToBytes = () => {
+    const fileSize = items.reduce((totalSize, item) => {
+      return totalSize + convertItemSizeToBytes(item);
+    }, 0);
+    isFileSizeExceeded = fileSize > unit.gByte;
+    return fileSize;
+  };
+
+  const convertFileSizeForUser = () => {
+    const fileSize = convertFileSizeToBytes;
+    if (fileSize === 0) return '0 B';
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(fileSize) / Math.log(unit.kByte));
+    return (
+      parseFloat((fileSize / Math.pow(unit.kByte, i)).toFixed(2)) +
+      ' ' +
+      sizes[i]
+    );
+  };
+
+  const handleSizeInput = (value, index) => {
+    // value = value.replace(/[^\d]/, '');
+    const filteredItems = items.filter(
+      (item, indexItem) => indexItem !== index
+    );
+    let changedItem = items.find((item, indexItem) => indexItem === index);
+    changedItem.size = value;
+    setItemsArr([...filteredItems, changedItem]);
+  };
   return (
     <>
       <Header />
@@ -40,30 +94,95 @@ export default function FileGenerator() {
           <h2 className="s-sub-title text-center text-capitalize">
             {feature.subTitle}
           </h2>
-          <button onClick={handleSubmit} className="btn btn-primary">download</button>
           <form onSubmit={handleSubmit} className="form-bg">
             <div className="file-gen-center-items center">
               <div className="d-flex justify-content-around">
                 <input type="text" className="input" placeholder="File name" />
                 <DropdownButton id="dropdown-basic-button" title={option}>
                   {optionsValues.map((option) => (
-                    <Dropdown.Item onClick={() => setOption(option)}>
+                    <Dropdown.Item
+                      key={option}
+                      onClick={() => setOption(option)}
+                    >
                       {option}
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
-                <button type="submit" className="btn btn-primary">
-                  Generate
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isFileGenerating || isFileGenerating}
+                >
+                  {isFileGenerating ? 'Generating...' : 'Generate'}
                 </button>
               </div>
               <div className="d-flex justify-content-center my-3">
-                The total file size is {fileSize} B.
+                <span>The total file size is {''} B.</span>
+                {isFileSizeExceeded && (
+                  <span className="">
+                    The maximum file size can be no more than 1 GB.
+                  </span>
+                )}
               </div>
               <div
                 className=" file-gen-center-items center"
                 style={{ width: '60%' }}
               >
-                <div className="row">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Size</th>
+                      <th>Unit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {itemsArr.map((item, index) => (
+                      <tr key={index}>
+                        <td>
+                          <label>
+                            <input
+                              required
+                              maxLength="10"
+                              type="text"
+                              value={
+                                item.size && item.size.replace(/[^\d]/, '')
+                              }
+                              className="input file-size-input"
+                              onChange={(e) =>
+                                handleSizeInput(e.target.value, index)
+                              }
+                              style={{ width: 110 }}
+                              placeholder="Size"
+                            />
+                          </label>
+                        </td>
+                        <td>
+                          <DropdownButton
+                            id="dropdown-basic-button"
+                            title={optionUnit}
+                          >
+                            {optionsUnitValues.map((optionUnit) => (
+                              <Dropdown.Item
+                                key={optionUnit}
+                                onClick={() => setOptionUnit(optionUnit)}
+                              >
+                                {optionUnit}
+                              </Dropdown.Item>
+                            ))}
+                          </DropdownButton>
+                        </td>
+                        <td class="delete-icon">
+                          <span
+                            onClick={() => deleteItemFromList(itemsArr, index)}
+                          >
+                            <AiFillDelete />
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {/* <div className="row">
                   <div className="col-6 font-weight-bold text-center">Size</div>
                   <div className="col-6 font-weight-bold text-center">Unit</div>
                 </div>
@@ -88,7 +207,7 @@ export default function FileGenerator() {
                       ))}
                     </DropdownButton>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </form>
