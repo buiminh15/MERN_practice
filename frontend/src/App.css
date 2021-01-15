@@ -176,6 +176,7 @@ p {
 
 .input {
   border-radius: 4px;
+  padding-left: 4px;
 }
 
 .textarea {
