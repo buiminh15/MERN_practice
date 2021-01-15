@@ -168,6 +168,7 @@ p {
 .s-sub-title {
   font-size: 0.8em;
 }
+
 .dropdown {
   border-radius: 4px !important;
   width: fit-content;
@@ -198,6 +199,15 @@ p {
   color: red;
   bottom: 100%;
 }
+
+.file-gen-center-items {
+  width: 40%;
+}
+
+.center {
+  margin: 0 auto;
+}
+
 .data-comparer-height {
   height: 50vh;
 }
@@ -226,4 +236,8 @@ p {
   border-style: solid;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
   border-image: initial;
+}
+
+.file-size-input {
+  width: 100px;
 }

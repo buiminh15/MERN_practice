@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 import Dropdown from 'react-dropdown';
-import { features } from '../../models/features'
 import { diffJson, diffLines, diffWords, diffArrays, diffCss } from "diff";
 import { useGlobalContext } from '../../context/context';
 import Header from '../components/common/Header';
 import { useEffect } from 'react';
+import { CATEGORY } from '../components/common/constant';
 
 export default function DataComparer() {
     var {
-        initFormatDataComparer,
-        firstDataComparer,
-        secondDataComparer,
-        amountAddedDataComparer,
-        amountDeletedDataComparer,
-        handleState,
-        content,
+      initFormatData,
+      firstDataComparer,
+      secondDataComparer,
+      amountAddedDataComparer,
+      amountDeletedDataComparer,
+      handleState,
+      content,
+      getFeature,
     } = useGlobalContext();
-    var feature = features.filter(item => item.name === 'data-comparer')[0]
+
+    const feature = getFeature(CATEGORY.DATA_COMPARER);
     var optionsValues = [
         'JSON', 'XML', 'CSV', 'YAML', 'TXT', 'ARRAY', 'CSS'
     ];

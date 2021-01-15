@@ -7,7 +7,11 @@ const Root = (props) => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/"
+          component={(props) => <Home {...props} />}
+        />
         {features.map((feature) => (
           <Route
             key={feature.name}

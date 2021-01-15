@@ -30,14 +30,7 @@ export const featureMixin = {
             const fileStream = streamSaver.createWriteStream(filename);
             await response.body.pipeTo(fileStream);
         },
-        deleteItemFromList(list, id, defaultValue) {
-            if (list.length > 1) {
-                list.splice(id, 1);
-            } else if (defaultValue) {
-                list.pop();
-                list.push(defaultValue);
-            }
-        }
+      
     },
     watch: {
         number() {

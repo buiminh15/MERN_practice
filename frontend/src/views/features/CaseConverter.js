@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { features } from '../../models/features';
 import _ from 'lodash';
 import Header from '../components/common/Header';
 import { useGlobalContext } from '../../context/context';
 import BottomFunctions from '../components/common/BottomFunctions';
 import { SET_CONTENT } from '../../redux/actions';
+import { CATEGORY } from '../components/common/constant';
 export default function CaseConverter() {
   var {
     content,
@@ -12,9 +12,10 @@ export default function CaseConverter() {
     handleState,
     deleteTexts,
     handleCopy,
+    getFeature,
   } = useGlobalContext();
 
-  const feature = features.filter((item) => item.name === 'case-generator')[0];
+  const feature = getFeature(CATEGORY.CASE_GENERATOR);
 
   const sentenceCase = () => {
     lowerCase();

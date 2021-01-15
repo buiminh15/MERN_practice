@@ -3,11 +3,11 @@ import { LoremIpsum } from 'lorem-ipsum';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { featureMixin } from '../../mixins/feature';
-import { features } from '../../models/features';
 import Header from '../components/common/Header';
 import BottomFunctions from '../components/common/BottomFunctions';
 import { useGlobalContext } from '../../context/context';
 import { SET_CONTENT, SET_NUMBER } from '../../redux/actions';
+import { CATEGORY } from '../components/common/constant';
 export default function TextGenerator() {
   var {
     content,
@@ -18,10 +18,11 @@ export default function TextGenerator() {
     number,
     deleteTexts,
     handleCopy,
+    getFeature,
   } = useGlobalContext();
 
   const lorem = new LoremIpsum();
-  const feature = features.filter((item) => item.name === 'text-generator')[0];
+  const feature = getFeature(CATEGORY.TEXT_GENERATOR);
   const optionsValues = [
     'Characters',
     '2-byte Hiragana Characters',
@@ -35,8 +36,7 @@ export default function TextGenerator() {
     'Paragraphs',
   ];
 
-  const [options, setOptions] = useState(optionsValues);
-  const [option, setOption] = useState(options[0]);
+  const [option, setOption] = useState(optionsValues[0]);
 
   const getContent = (event) => {
     event.preventDefault();
@@ -63,7 +63,6 @@ export default function TextGenerator() {
       return generate(
         'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲ'
       );
-      return generate('アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲ');
     } else if (option === '1-byte Katakana Characters') {
       return generate('ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦ');
     } else if (option === 'Numbers') {
@@ -106,18 +105,18 @@ export default function TextGenerator() {
                 <input
                   className="input"
                   required
-                  min='1'
-                  step='1'
+                  min="1"
+                  step="1"
                   max={maxNumber}
                   placeholder="Number"
                   type="number"
                   onChange={(e) => handleState(SET_NUMBER, +e.target.value)}
                 />
                 <Dropdown
-                  options={options}
+                  options={optionsValues}
                   onChange={(e) => setOption(e.value)}
-                  value={options[0]}
-                  className="dropdown mx-3"
+                  value={optionsValues[0]}
+                  className="dropdown-custom mx-3"
                 />
                 <button type="submit" className="btn btn-primary">
                   Generate
