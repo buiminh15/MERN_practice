@@ -3,8 +3,7 @@ import { useGlobalContext } from '../../context/context';
 import { CATEGORY } from '../components/common/constant';
 import Header from '../components/common/Header';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import { AiFillDelete } from 'react-icons/ai';
-import { featureMixin } from '../../mixins/feature';
+import { AiFillDelete, AiOutlinePlus } from 'react-icons/ai';
 
 export default function FileGenerator() {
   var {
@@ -23,7 +22,7 @@ export default function FileGenerator() {
   var [option, setOption] = useState(optionsValues[0]);
   var [optionUnit, setOptionUnit] = useState(optionsUnitValues[0]);
   const handleSubmit = () => {};
-  
+
   const generate = async () => {
     isFileGenerating = true;
     // let finalFileName = fileName
@@ -35,15 +34,16 @@ export default function FileGenerator() {
     //   downloadFileFromServer(finalFileName, response);
     // }
   };
-  const deleteItemFromList = (list, id, defaultValue) => {
+  const deleteItemFromList = (list, id) => {
+    list.splice(id, 1);
+    if (list.length > 0) {
+      setItemsArr([...list]);
+    }
+  };
 
-            if (list.length > 1) {
-                setItemsArr(list.splice(id, 1));
-            } else if (defaultValue) {
-                list.pop();
-                list.push(defaultValue);
-            }
-        }
+  const handleAddItem = () => {
+    setItemsArr([...itemsArr,{ size: '', unit: 'Bytes' }]);
+  }
   const convertItemSizeToBytes = (item) => {
     if (item.unit === 'Bytes') {
       return +item.size;
@@ -55,7 +55,7 @@ export default function FileGenerator() {
   };
 
   const convertFileSizeToBytes = () => {
-    const fileSize = items.reduce((totalSize, item) => {
+    const fileSize = itemsArr.reduce((totalSize, item) => {
       return totalSize + convertItemSizeToBytes(item);
     }, 0);
     isFileSizeExceeded = fileSize > unit.gByte;
@@ -63,7 +63,7 @@ export default function FileGenerator() {
   };
 
   const convertFileSizeForUser = () => {
-    const fileSize = convertFileSizeToBytes;
+    const fileSize = convertFileSizeToBytes();
     if (fileSize === 0) return '0 B';
     const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     const i = Math.floor(Math.log(fileSize) / Math.log(unit.kByte));
@@ -75,14 +75,15 @@ export default function FileGenerator() {
   };
 
   const handleSizeInput = (value, index) => {
-    // value = value.replace(/[^\d]/, '');
-    const filteredItems = items.filter(
+    const filteredItems = itemsArr.filter(
       (item, indexItem) => indexItem !== index
     );
-    let changedItem = items.find((item, indexItem) => indexItem === index);
+    let changedItem = itemsArr.find((item, indexItem) => indexItem === index);
     changedItem.size = value;
     setItemsArr([...filteredItems, changedItem]);
   };
+
+
   return (
     <>
       <Header />
@@ -98,7 +99,7 @@ export default function FileGenerator() {
             <div className="file-gen-center-items center">
               <div className="d-flex justify-content-around">
                 <input type="text" className="input" placeholder="File name" />
-                <DropdownButton id="dropdown-basic-button" title={option}>
+                <DropdownButton style={{minWidth: 60}} id="dropdown-basic-button" title={option}>
                   {optionsValues.map((option) => (
                     <Dropdown.Item
                       key={option}
@@ -159,6 +160,7 @@ export default function FileGenerator() {
                         <td>
                           <DropdownButton
                             id="dropdown-basic-button"
+                            style={{minWidth: 40}}
                             title={optionUnit}
                           >
                             {optionsUnitValues.map((optionUnit) => (
@@ -180,6 +182,13 @@ export default function FileGenerator() {
                         </td>
                       </tr>
                     ))}
+                    <tr>
+                      <td>
+                        <span onClick={() => handleAddItem()}>
+                          <AiOutlinePlus />
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
                 {/* <div className="row">
