@@ -4,6 +4,7 @@ import { CATEGORY } from '../components/common/constant';
 import Header from '../components/common/Header';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { AiFillDelete, AiOutlinePlus } from 'react-icons/ai';
+import axios from 'axios';
 
 export default function FileGenerator() {
   var {
@@ -21,7 +22,19 @@ export default function FileGenerator() {
   var [itemsArr, setItemsArr] = useState(items);
   var [option, setOption] = useState(optionsValues[0]);
   var [optionUnit, setOptionUnit] = useState(optionsUnitValues[0]);
-  const handleSubmit = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+     const file = {
+      file_name: 'test.txt',
+      size: 1
+    };
+    axios.post(`http://localhost:3002/api/v1/file-generator`, { file })
+      .then(res => {
+        console.log('aaaaa');
+      })
+  
+  };
 
   const generate = async () => {
     isFileGenerating = true;
