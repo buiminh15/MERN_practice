@@ -1,17 +1,13 @@
-// const generator = require('test-file-generator/lib/classes/TestFileGenerator');
-// console.time('start')
-// let genFile = new generator.TestFileGenerator('txt');
-// genFile.setSize(2000)
-// genFile.generateFile()
-// console.timeEnd('start');
-// console.log(new generator.TestFileGenerator('gif').generateFile());
+const fs = require('fs');
 
-const translate = require('translate-google');
-
-translate('I speak Chinese', { to: 'zh-cn' })
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.error(err);
+const createEmptyFileOfSize = (fileName, size) => {
+  return new Promise((resolve, reject) => {
+    fh = fs.openSync(fileName, 'w');
+    fs.writeSync(fh, 'ok', Math.max(0, size - 2));
+    fs.closeSync(fh);
+    resolve(true);
   });
+};
+
+// Create a file of 1 GiB
+createEmptyFileOfSize('./1.txt', 1024 * 1024 * 1024);

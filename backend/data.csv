@@ -1,4 +1,0 @@
-﻿id,level,en,jp,vi
-1,1,Verify that cursor is focused on the “Username” text box on the page load (login page),ページ読み込み（ログインページ）の「ユーザー名」テキストボックスにカーソルが合っていることを確認します,Xác minh rằng con trỏ được tập trung vào hộp văn bản “Tên người dùng” khi tải trang (trang đăng nhập)
-2,1,"Verify that the login screen contains elements such as Username, Password, Sign in button, Remember password check box, Forgot password link, and create an account link.",ログイン画面に、ユーザー名、パスワード、サインインボタン、パスワードを記憶するチェックボックス、パスワードを忘れた場合のリンクなどの要素が含まれていることを確認し、アカウントリンクを作成します。,"Xác minh rằng màn hình đăng nhập có chứa các yếu tố như Tên người dùng, Mật khẩu, nút Đăng nhập, hộp kiểm Nhớ mật khẩu, Liên kết quên mật khẩu và tạo liên kết tài khoản."
-3,1,Verify that tab functionality is working properly or not,タブ機能が正しく機能しているかどうかを確認します,Xác minh rằng chức năng tab hoạt động bình thường hay khôn
