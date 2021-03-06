@@ -33,6 +33,17 @@ const importData = async () => {
   }
 };
 
+const getAllData = async () => {
+  try {
+    await Login.find({}, (err, datas) => {
+      console.log('datas: '.green.inverse, datas);
+    });
+    process.exit();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // Delete data
 
 const deleteData = async () => {
@@ -45,8 +56,11 @@ const deleteData = async () => {
   }
 };
 
+
 if (process.argv[2] === '-i') {
   importData();
 } else if (process.argv[2] === '-d') {
   deleteData();
+} else if (process.argv[2] === '-s') {
+  getAllData();
 }
