@@ -5,7 +5,9 @@ import Header from '../components/common/Header';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { AiFillDelete, AiOutlinePlus } from 'react-icons/ai';
 import axios from 'axios';
-
+import request from "../../helpers/request";
+import { featureMixin } from '../../mixins/feature'
+import FileSaver from 'file-saver';
 export default function FileGenerator() {
   var {
     fileName,
@@ -17,23 +19,34 @@ export default function FileGenerator() {
     getFeature,
   } = useGlobalContext();
   const feature = getFeature(CATEGORY.FILE_GENERATOR);
-  const optionsValues = ['TXT', 'DOC'];
+  const optionsValues = ['TXT'];
   const optionsUnitValues = ['Bytes', 'KBytes', 'MBytes'];
+
+  var [fileName, setFileName] = useState('');
+  var [inputValue, setinputValue] = useState(0);
   var [itemsArr, setItemsArr] = useState(items);
   var [option, setOption] = useState(optionsValues[0]);
   var [optionUnit, setOptionUnit] = useState(optionsUnitValues[0]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-     const file = {
-      file_name: 'test.txt',
-      size: 1
+    const item = {
+      size: inputValue,
+      unit: optionUnit
+    }
+    const file = {
+      file_name: `${fileName}.${option}`,
+      size: convertItemSizeToBytes(item)
     };
-    axios.post(`http://localhost:3002/api/v1/file-generator`, { file })
-      .then(res => {
-        console.log('aaaaa');
-      })
-  
+    const res = await request.post(`/file/txt`, file )
+
+    if (res.status === 200) {
+      FileSaver.saveAs(
+        new Blob([res.data], { type: 'text/plain' }),
+        `${fileName}.${option}`
+      );
+    }
+
   };
 
   const generate = async () => {
@@ -55,8 +68,9 @@ export default function FileGenerator() {
   };
 
   const handleAddItem = () => {
-    setItemsArr([...itemsArr,{ size: '', unit: 'Bytes' }]);
+    setItemsArr([...itemsArr, { size: '', unit: 'Bytes' }]);
   }
+
   const convertItemSizeToBytes = (item) => {
     if (item.unit === 'Bytes') {
       return +item.size;
@@ -87,6 +101,11 @@ export default function FileGenerator() {
     );
   };
 
+  const handleSizeInput1 = () => {
+
+
+  }
+
   const handleSizeInput = (value, index) => {
     const filteredItems = itemsArr.filter(
       (item, indexItem) => indexItem !== index
@@ -111,8 +130,8 @@ export default function FileGenerator() {
           <form onSubmit={handleSubmit} className="form-bg">
             <div className="file-gen-center-items center">
               <div className="d-flex justify-content-around">
-                <input type="text" className="input" placeholder="File name" />
-                <DropdownButton style={{minWidth: 60}} id="dropdown-basic-button" title={option}>
+                <input type="text" className="input" placeholder="File name" value={fileName} onChange={(e) => setFileName(e.target.value)} />
+                <DropdownButton style={{ minWidth: 60 }} id="dropdown-basic-button" title={option}>
                   {optionsValues.map((option) => (
                     <Dropdown.Item
                       key={option}
@@ -130,14 +149,14 @@ export default function FileGenerator() {
                   {isFileGenerating ? 'Generating...' : 'Generate'}
                 </button>
               </div>
-              <div className="d-flex justify-content-center my-3">
+              {/* <div className="d-flex justify-content-center my-3">
                 <span>The total file size is {''} B.</span>
                 {isFileSizeExceeded && (
                   <span className="">
                     The maximum file size can be no more than 1 GB.
                   </span>
                 )}
-              </div>
+              </div> */}
               <div
                 className=" file-gen-center-items center"
                 style={{ width: '60%' }}
@@ -150,7 +169,41 @@ export default function FileGenerator() {
                     </tr>
                   </thead>
                   <tbody>
-                    {itemsArr.map((item, index) => (
+                    <tr>
+                      <td>
+                        <label>
+                          <input
+                            required
+                            maxLength="10"
+                            type="text"
+                            value={inputValue}
+                            className="input file-size-input"
+                            onChange={(e) =>
+                              setinputValue(e.target.value)
+                            }
+                            style={{ width: 110 }}
+                            placeholder="Size"
+                          />
+                        </label>
+                      </td>
+                      <td>
+                        <DropdownButton
+                          id="dropdown-basic-button"
+                          style={{ minWidth: 40 }}
+                          title={optionUnit}
+                        >
+                          {optionsUnitValues.map((optionUnit) => (
+                            <Dropdown.Item
+                              key={optionUnit}
+                              onClick={() => setOptionUnit(optionUnit)}
+                            >
+                              {optionUnit}
+                            </Dropdown.Item>
+                          ))}
+                        </DropdownButton>
+                      </td>
+                    </tr>
+                    {/* {itemsArr.map((item, index) => (
                       <tr key={index}>
                         <td>
                           <label>
@@ -194,7 +247,7 @@ export default function FileGenerator() {
                           </span>
                         </td>
                       </tr>
-                    ))}
+                    ))} */}
                     <tr>
                       <td>
                         <span onClick={() => handleAddItem()}>
