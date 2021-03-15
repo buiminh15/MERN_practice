@@ -34,8 +34,11 @@ export const convertJsonToCsvTestCase = async (datas, file_name) => {
   const filePath = path.join(__dirname, '..', `upload`, file_name);
   try {
     const parser = new Parser(opts);
-    const csv = parser.parse(datas);
-    await fs.writeFileSync(filePath, csv, function (err) {
+    let csv = parser.parse(datas);
+    let strArr = csv.split('\n')
+    strArr.shift()
+    let arr = strArr.map(item => item = item.match(/.{1,65}(\s|$)/g)).map(item => item.join('\r\n')).join('\n')
+    await fs.writeFileSync(filePath, arr, function (err) {
       if (err) throw err;
       console.log('file saved');
     });
