@@ -1,32 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors')
-var indexRouter = require('./routes/index');
-var { MONGO } = require('./helper/configHelper');
-var filesRouter = require('./routes/files');
-const mongoose = require('mongoose')
+import express from 'express'
+import createError from 'http-errors'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+import cors from 'cors'
+import { config } from './helper/configHelper'
+import indexRouter from './routes/index'
+import filesRouter from './routes/files'
+import mongoose from 'mongoose'
+
 var app = express();
 
 mongoose.Promise = global.Promise
-mongoose.connect(MONGO.URL, {
+mongoose.connect(config.MONGO.URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
 })
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 app.use('/', indexRouter);
 app.use('/api/v1/file', filesRouter);

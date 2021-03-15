@@ -1,12 +1,13 @@
-const fs = require('fs');
-const mongoose = require('mongoose');
-const colors = require('colors');
-const dotenv = require('dotenv');
+import fs from 'fs'
+import mongoose from 'mongoose'
+import colors from 'colors'
+import dotenv from 'dotenv'
+
 let url =
   'mongodb+srv://minhbb:12345678a@cluster0.grd6k.mongodb.net/d5-test?retryWrites=true&w=majority';
 
 // Load models
-const Login = require('./models/Login.model');
+import Testcase from './models/Testcase.model'
 
 // Connect to DB
 mongoose.connect(url, {
@@ -17,7 +18,7 @@ mongoose.connect(url, {
 });
 
 // Read JSON files
-const logins = JSON.parse(
+const testcases = JSON.parse(
   fs.readFileSync(`${__dirname}/demo.json`, 'utf-8')
 );
 
@@ -25,7 +26,7 @@ const logins = JSON.parse(
 // Import into DB
 const importData = async () => {
   try {
-    await Login.create(logins);
+    await Testcase.create(testcases);
     console.log('Data imported...'.green.inverse);
     process.exit();
   } catch (error) {
@@ -33,22 +34,11 @@ const importData = async () => {
   }
 };
 
-const getAllData = async () => {
-  try {
-    await Login.find({}, (err, datas) => {
-      console.log('datas: '.green.inverse, datas);
-    });
-    process.exit();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 // Delete data
 
 const deleteData = async () => {
   try {
-    await Login.deleteMany();
+    await Testcase.deleteMany();
     console.log('Data Destroyed...'.red.inverse);
     process.exit();
   } catch (error) {
@@ -61,6 +51,4 @@ if (process.argv[2] === '-i') {
   importData();
 } else if (process.argv[2] === '-d') {
   deleteData();
-} else if (process.argv[2] === '-s') {
-  getAllData();
 }

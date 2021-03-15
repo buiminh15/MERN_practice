@@ -1,10 +1,11 @@
-const express = require('express');
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+
 const router = express.Router();
-const path = require('path');
-const fs = require('fs')
 const { createEmptyFileOfSize, makeDir, cloneFileTemplateExcel, convertJsonToCsvTestCase, sendFileToClient, cloneFileCsv } = require('../helper/functions');
-const Login = require('../models/Login.model');
-const { MIME_TYPE } = require('../helper/constants');
+const Testcase = require('../models/Testcase.model');
+const { MIME_TYPE, DESTINATION_PATH } = require('../helper/constants');
 
 
 router.post('/txt', function (req, res, next) {
@@ -15,29 +16,28 @@ router.post('/txt', function (req, res, next) {
 });
 
 router.post('/excel', async function (req, res, next) {
-  let dirDest = 'D:\\D5-TOOLS-TEST\\'
-  let file_name = 'test.csv'
-  const filePath = path.join(__dirname, '..', `upload`,file_name);
-  makeDir(dirDest)
-  // cloneFile('1.txt', path.join(dirDest, '1.txt'))
+  const { file_name } = req.body
+  const filePath = path.join(__dirname, '..', `upload`, file_name);
+  if (!fs.existsSync(DESTINATION_PATH)) {
+    makeDir(DESTINATION_PATH)
+  }
   try {
-    await Login.find({}, (err, datas) => {
+    await Testcase.find({}, (err, datas) => {
       if (err) {
         res.json({ success: false, message: err }); // Return error message
       } else if (!datas) {
         res.json({ success: false, message: 'No datas found.' }); // Return error of no blogs found
       }
-      convertJsonToCsvTestCase(datas)
+      convertJsonToCsvTestCase(datas, file_name)
       if (fs.existsSync(filePath)) {
         //file exists
-        cloneFileCsv(file_name, path.join(dirDest, file_name))
+        cloneFileCsv(file_name, path.join(DESTINATION_PATH, file_name))
       }
-      res.json({ message: 'OK' })
+      res.json({ success: true })
     });
   } catch (error) {
     console.error(error)
   }
 });
 
-
-module.exports = router;
+export default router;

@@ -10,7 +10,7 @@ fs.readFile(
     if (err) {
       console.log(err);
     } else {
-      data.split('\n').map((item) => {
+      data.split('\r\n').map((item) => {
         let obj1 = Object.assign({}, obj)
         obj1['test_case'] = item;
         arr.push(obj1)

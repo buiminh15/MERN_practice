@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon -r esm ./bin/www"
   },
   "dependencies": {
     "colors": "^1.4.0",
@@ -12,6 +12,7 @@
     "csvtojson": "^2.0.10",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
