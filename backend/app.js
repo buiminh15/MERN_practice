@@ -11,6 +11,7 @@ import mongoose from 'mongoose'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 
+require('dotenv').config()
 var app = express();
 
 // mongoose.Promise = global.Promise
@@ -35,7 +36,7 @@ app.use(cookieParser());
 app.use(cors())
 app.use(helmet())
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: config.MONGO.URL, mongoOptions: config.MONGO.OPTIONS, collectionName: config.MONGO.SESSION_NAME }),
