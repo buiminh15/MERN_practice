@@ -4,29 +4,49 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import cors from 'cors'
+import helmet from 'helmet'
 import { config } from './helper/configHelper'
-import indexRouter from './routes/index'
-import filesRouter from './routes/files'
+import filesRoute from './routes/files.route'
 import mongoose from 'mongoose'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
 
 var app = express();
 
-mongoose.Promise = global.Promise
-mongoose.connect(config.MONGO.URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-})
+// mongoose.Promise = global.Promise
+// mongoose.connect(config.MONGO.URL, {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useFindAndModify: false,
+//   useUnifiedTopology: true,
+// })
 
+// const connection = mongoose.createConnection(dbString, dbOptions)
+
+// const sessionStore = new MongoStore({
+//   mongooseConnection: connection,
+//   collection: 'sessions'
+// })
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors())
-app.use('/', indexRouter);
-app.use('/api/v1/file', filesRouter);
+app.use(helmet())
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: config.MONGO.URL, mongoOptions: config.MONGO.OPTIONS, collectionName: config.MONGO.SESSION_NAME }),
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } // Equals 1 day
+}))
+
+
+app.use('/api/v1/', filesRoute);
+app.use('/', (req, res, next) => {
+  res.send('hello world')
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -44,4 +64,8 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+app.listen(3000, () => {
+  console.log(' App is running ...');
+})
+
+export default app;
