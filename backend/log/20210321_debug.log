@@ -1,0 +1,41 @@
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[31merror[39m: Error: Incorrect email or password
+    at Object.loginUserWithEmailAndPassword (G:\5. Project\Nodejs\d5\MERN_practice\backend\services\auth.service.js:11:11)
+    at async G:\5. Project\Nodejs\d5\MERN_practice\backend\controllers\auth.controller.js:15:16
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000

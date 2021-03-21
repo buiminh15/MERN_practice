@@ -1,47 +1,45 @@
 import express from 'express'
-import createError from 'http-errors'
-import path from 'path'
 import cookieParser from 'cookie-parser'
-import logger from 'morgan'
 import cors from 'cors'
-import { config } from './helper/configHelper'
-import indexRouter from './routes/index'
-import filesRouter from './routes/files'
+import helmet from 'helmet'
+import indexRoute from './routes/index'
 import mongoose from 'mongoose'
+import ApiError from './utils/ApiError'
+import errorHandler from './middlewares/error'
+import config from './config/config'
+import logger from './config/logger'
+import passport from 'passport '
+import jwtStrategy  from './config/passport'
 
+require('dotenv').config()
 var app = express();
+let server;
 
-mongoose.Promise = global.Promise
-mongoose.connect(config.MONGO.URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-})
+mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
+  logger.info('Connected to MongoDB');
+  server = app.listen(config.port, () => {
+    logger.info(`Listening to port ${config.port}`);
+  });
+});
 
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors())
-app.use('/', indexRouter);
-app.use('/api/v1/file', filesRouter);
+app.use(helmet())
+// jwt authentication
+app.use(passport.initialize());
+passport.use('jwt', jwtStrategy);
+
+app.use('/api/v1/', indexRoute);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.use((req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(errorHandler)
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+export default app;
