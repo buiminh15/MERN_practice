@@ -2,14 +2,14 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import helmet from 'helmet'
-import indexRoute from './routes/index'
 import mongoose from 'mongoose'
 import ApiError from './utils/ApiError'
 import errorHandler from './middlewares/error'
 import config from './config/config'
 import logger from './config/logger'
-import passport from 'passport '
+import passport from 'passport'
 import jwtStrategy  from './config/passport'
+import indexRoute from './routes/index'
 
 require('dotenv').config()
 var app = express();

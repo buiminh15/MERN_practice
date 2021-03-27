@@ -1,6 +1,8 @@
 import express from 'express';
 import filesRoute from './files.route';
 import authRoute from './auth.route';
+import userRoute from './user.route';
+import testcaseRoute from './testcase.route';
 
 const router = express.Router();
 
@@ -12,6 +14,14 @@ const defaultRoutes = [
   {
     path: '/files',
     route: filesRoute,
+  },
+  {
+    path: '/users',
+    route: userRoute,
+  },
+  {
+    path: '/testcases',
+    route: testcaseRoute,
   },
 ];
 

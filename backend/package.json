@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon -r esm app.js",
-    "dev": "cross-env NODE_ENV=development nodemon -r esm app.js"
+    "dev": "cross-env NODE_ENV=development nodemon -r esm app.js",
+    "test-excel": "cross-env NODE_ENV=development nodemon -r esm test-excel.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -30,9 +31,11 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.14",
     "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "test-file-generator": "^1.0.11",
     "validator": "^13.5.2",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
