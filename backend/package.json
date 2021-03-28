@@ -37,7 +37,6 @@
     "test-file-generator": "^1.0.11",
     "validator": "^13.5.2",
     "winston": "^3.3.3",
-    "xlsx": "^0.16.9",
     "xlsx-populate": "^1.21.0"
   },
   "devDependencies": {

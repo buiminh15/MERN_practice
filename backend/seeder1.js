@@ -1,13 +1,15 @@
 import fs from 'fs'
 import mongoose from 'mongoose'
-import colors from 'colors'
-import dotenv from 'dotenv'
+// const fs =require('fs')
+// const mongoose = require( 'mongoose')
+
 
 let url =
   'mongodb+srv://minhbb:12345678a@cluster0.grd6k.mongodb.net/d5-test?retryWrites=true&w=majority';
 
 // Load models
-import Testcase from './models/Testcase.model'
+// const Testcase = require( './models/Testcase.model')
+import WebTestcase from './models/web_testcase.model'
 
 // Connect to DB
 mongoose.connect(url, {
@@ -18,16 +20,19 @@ mongoose.connect(url, {
 });
 
 // Read JSON files
+// const testcases = JSON.parse(
+//   fs.readFileSync(`${__dirname}/demo.json`, 'utf-8')
+// );
 const testcases = JSON.parse(
-  fs.readFileSync(`${__dirname}/demo.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/demo1.json`, 'utf-8')
 );
 
 
 // Import into DB
 const importData = async () => {
   try {
-    await Testcase.create(testcases);
-    console.log('Data imported...'.green.inverse);
+    await WebTestcase.create(testcases);
+    console.log('Data imported...');
     process.exit();
   } catch (error) {
     console.error(error);
@@ -39,7 +44,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Testcase.deleteMany();
-    console.log('Data Destroyed...'.red.inverse);
+    console.log('Data Destroyed...');
     process.exit();
   } catch (error) {
     console.error(error);
