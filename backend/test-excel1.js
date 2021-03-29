@@ -2,7 +2,7 @@ const XlsxPopulate = require('xlsx-populate');
 const path = require('path')
 const request = require('request-promise');
 
-const filePath = path.join(__dirname, 'templates', 'test.xlsx')
+const filePath = path.join(__dirname, 'templates', 'dich.xlsx')
 const range = { s: { c: 1, r: 1 }, e: { c: 75, r: 100 } }
 
 const Clean = (val) => {
