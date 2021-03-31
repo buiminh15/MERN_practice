@@ -1,38 +1,38 @@
-"Check if correct data is getting saved in database upon 
-successful page submit"
-"Check values for columns which are not accepting null values"
-"Check for data integrity. Data should be stored in single or 
-multiple tables based on design"
-"Index names should be given as per the standards e.g. IND__"
-"Tables should have primary key column"
-"Table columns should have description information available 
-(except for audit columns like created date, created by etc.)"
-"For every database add/update operation log should be added"
-"Required table indexes should be created"
-"Check if data is committed to database only when the operation 
-is successfully completed"
-"Data should be rolled back in case of failed transactions"
-"Database name should be given as per the application type i.e. 
-test, UAT, sandbox, live (though this is not a standard it is 
-helpful for database maintenance)"
-"Database logical names should be given according to database 
-name (again this is not standard but helpful for DB maintenance)"
-"Stored procedures should not be named with prefix “sp_”"
-"Check is values for table audit columns (like createddate, 
-createdby, updatedate, updatedby, isdeleted, deleteddate, 
-deletedby etc.) are populated properly"
-"Check if input data is not truncated while saving. Field length 
-shown to user on page and in database schema should be same"
-"Check numeric fields with minimum, maximum, and float values"
-"Check numeric fields with negative values (for both acceptance 
-and non-acceptance)"
-"Check if radio button and dropdown list options are saved 
-correctly in database"
-"Check if database fields are designed with correct data type and 
-data length"
-"Check if all table constraints like Primary key, Foreign key 
-etc. are implemented correctly"
-"Test stored procedures and triggers with sample input data"
-"Input field leading and trailing spaces should be truncated 
-before committing data to database"
-"Null values should not be allowed for Primary key column"
+"All fields on page (e.g. text box, radio options, dropdown 
+lists) should be aligned properly"
+"Numeric values should be right justified unless specified 
+otherwise"
+"Enough space should be provided between field labels, columns, 
+rows, error messages etc."
+"Scroll bar should be enabled only when necessary"
+"Font size, style and color for headline, description text, 
+labels, infield data, and grid info should be standard as 
+specified in SRS"
+"Description text box should be multi-line"
+"Disabled fields should be grayed out and user should not be able 
+to set focus on these fields"
+"Upon click of any input text field, mouse arrow pointer should 
+get changed to cursor"
+"User should not be able to type in drop down select lists"
+"Information filled by users should remain intact when there is 
+error message on page submit. User should be able to submit the 
+form again by correcting the errors"
+"Check if proper field labels are used in error messages"
+"Dropdown field values should be displayed in defined sort order"
+"Tab and Shift+Tab order should work properly"
+"Default radio options should be pre-selected on page load"
+"Field specific and page level help messages should be available"
+"Check if correct fields are highlighted in case of errors"
+"Check if dropdown list options are readable and not truncated 
+due to field size limit"
+"All buttons on page should be accessible by keyboard shortcuts 
+and user should be able to perform all operations using keyboard"
+"Check all pages for broken images"
+"Check all pages for broken links"
+"All pages should have title"
+"Confirmation messages should be displayed before performing any 
+update or delete operation"
+"Hour glass should be displayed when application is busy"
+"Page text should be left justified"
+"User should be able to select only one radio option and any 
+combination for check boxes."

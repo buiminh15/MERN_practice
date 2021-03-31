@@ -11,7 +11,7 @@ const generateExcelFile = (req, res, next) => {
 }
 
 const generateTestcaseFile = (req, res, next) => {
-    genExcelTestcaseFile(res)
+    genExcelTestcaseFile(req, res)
 }
 
 export default { generateTextFile, generateExcelFile, generateTestcaseFile }
