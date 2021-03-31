@@ -80,8 +80,9 @@ const setValueToSheet = (sheet, range, dataArray) => {
     for (let C = range.s.c; C <= range.e.c; ++C) {
       let cell_address = { c: C, r: R };
       const cell = sheet.row(cell_address.r).cell(cell_address.c);
+      console.log('minn ', dataArray[i - 1]);
       // cell.value(dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, '')).style({ fontFamily: "Arial" })
-      cell.value(dataArray[i - 1]).style({ fontFamily: "Arial" })
+      cell.value(dataArray[i - 1] ? dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, ''): '').style({ fontFamily: "Arial" })
     }
     let cellChk = sheet.row(R).cell(15 + i)
     cellChk.value('〇').style({ fontFamily: "Arial" })
