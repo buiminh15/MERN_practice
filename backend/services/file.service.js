@@ -61,7 +61,7 @@ const genExcelTestcaseFile = async (res) => {
     let file_name = 'minhbb_test.csv';
     try {
         const testcases = await WebTestcase.find({});
-        await convertJsonToCsvTestCase(testcases[0].login_testcases, file_name, ['test_case'])
+        await convertJsonToCsvTestCase(testcases[0].database_testing_testcases, file_name, ['test_case'])
         if (getFileCsvPath(file_name)) {
             const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
             dataArray = data.replace(/"$/gm, '",');
