@@ -1,7 +1,7 @@
-import mongoose from'mongoose';
-import validator from'validator';
-import bcrypt from'bcryptjs';
-import roles from'../config/roles';
+import mongoose from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcryptjs';
+import Role from '../config/roles';
 
 const userSchema = mongoose.Schema(
   {
@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: Role.roles,
       default: 'user',
     },
   },

@@ -10,7 +10,7 @@ const rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET -
 var dataArray
 var arrayOfArrays = [];
 
-const splitArray = (array) => {
+const splitArray = (array, MAX_LINE_IN_SHEET) => {
   while (array.length > 0) {
     let arrayElement = array.splice(0, MAX_LINE_IN_SHEET);
     arrayOfArrays.push(arrayElement);
@@ -27,7 +27,7 @@ const setValueToSheet = (sheet, range, dataArray) => {
       cell.value(dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, '')).style({ fontFamily: "Arial" })
     }
     let cellChk = sheet.row(R).cell(15 + i)
-    cellChk.value('x').style({ fontFamily: "Arial" })
+    cellChk.value('〇').style({ fontFamily: "Arial" })
     i++
   }
 }
@@ -41,26 +41,30 @@ const setResultToSheet = (sheet, range) => {
       cell.value('result').style({ fontFamily: "Arial" })
     }
     let cellChk = sheet.row(R).cell(15 + i)
-    cellChk.value('\u20DD').style({ fontFamily: "Arial" })
+    cellChk.value('〇').style({ fontFamily: "Arial" })
     i++
   }
 }
 
-const parseData = () => {
+// const parseData = () => {
+//   try {
+//     const data = fs.readFileSync(fileCsvPath, 'utf8')
+//     dataArray = data.replace(/"$/gm, '",');
+//     dataArray = dataArray.split(/,$/gm)
+//     arrayOfArrays = splitArray(dataArray, MAX_LINE_IN_SHEET)
+//     return arrayOfArrays
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
+async function run() {
   try {
     const data = fs.readFileSync(fileCsvPath, 'utf8')
     dataArray = data.replace(/"$/gm, '",');
     dataArray = dataArray.split(/,$/gm)
-    arrayOfArrays = splitArray(dataArray)
-    return arrayOfArrays
-  } catch (error) {
-    console.error(error)
-  }
-}
+    arrayOfArrays = splitArray(dataArray, MAX_LINE_IN_SHEET)
 
-async function run() {
-  try {
-    let arrayOfArrays = parseData()
     const workbook = await XlsxPopulate.fromFileAsync(filePath)
     for (let index = 0; index < arrayOfArrays.length; index++) {
       let sheet = workbook.sheet(index)

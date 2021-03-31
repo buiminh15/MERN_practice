@@ -3,13 +3,13 @@ import { Testcase } from '../models';
 import ApiError from '../utils/ApiError';
 
 const getTestcases = async () => {
-  return Testcase.find({}, (err, testcases) => {
+  return await Testcase.find({}, (err, testcases) => {
     if (err) throw new ApiError(httpStatus.NOT_FOUND, 'Not found any testcase')
   });
 };
 
 const getTestcase = async (_id) => {
-  return Testcase.findById({_id});
+  return await Testcase.findById({ _id });
 };
 
 const updateTestcase = async (_id, updateBody) => {
@@ -31,4 +31,4 @@ const deleteTestcase = async (_id) => {
   return testcase;
 };
 
-export default { getTestcases, getTestcase, updateTestcase, deleteTestcase}
+export default { getTestcases, getTestcase, updateTestcase, deleteTestcase }

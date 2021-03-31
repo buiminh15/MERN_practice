@@ -36,4 +36,3 @@ const webTestcaseSchema = mongoose.Schema({
 const WebTestcase = mongoose.model('WebTestcase', webTestcaseSchema);
 
 export default WebTestcase;
-// module.exports = WebTestcase;

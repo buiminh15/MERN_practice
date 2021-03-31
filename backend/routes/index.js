@@ -12,7 +12,7 @@ const defaultRoutes = [
     route: authRoute,
   },
   {
-    path: '/files',
+    path: '/files/generate',
     route: filesRoute,
   },
   {
