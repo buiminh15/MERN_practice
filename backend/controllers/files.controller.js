@@ -1,4 +1,4 @@
-import { genExcelFile, genExcelTestcaseFile, genTextFile } from '../services/file.service';
+import { genExcelFile, genExcelTestcaseFile, genTextFile, generateExcelTranslatorFile } from '../services/file.service';
 
 const generateTextFile = (req, res, next) => {
     const { file_name, size } = req.body
@@ -14,4 +14,8 @@ const generateTestcaseFile = (req, res, next) => {
     genExcelTestcaseFile(req, res)
 }
 
-export default { generateTextFile, generateExcelFile, generateTestcaseFile }
+const generateTranslatorFile = (req, res, next) => {
+    generateExcelTranslatorFile(req, res);
+}
+
+export default { generateTextFile, generateExcelFile, generateTestcaseFile, generateTranslatorFile }

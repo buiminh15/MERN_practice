@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { Parser } from 'json2csv'
+import request from 'request-promise';
 
 const createEmptyFileOfSize = (fileName, size) => {
   return new Promise((resolve, reject) => {
@@ -47,14 +48,6 @@ const convertJsonToCsvTestCase = async (datas, file_name, fieldsArr) => {
   }
 }
 const sendFileToClient = (res, file_name, mime_type) => {
-  const filePath = path.join(__dirname, '..', `upload`, file_name);
-  const src = fs.createReadStream(filePath);
-
-  res.writeHead(200, {
-    'Content-Type': `${mime_type}`,
-    'Content-Disposition': `attachment; filename=${file_name}`,
-    'Content-Transfer-Encoding': 'Binary'
-  });
   src.pipe(res);
 }
 const cloneFileCsv = async (fileNameSrc, filePathDest) => {
@@ -80,8 +73,6 @@ const setValueToSheet = (sheet, range, dataArray) => {
     for (let C = range.s.c; C <= range.e.c; ++C) {
       let cell_address = { c: C, r: R };
       const cell = sheet.row(cell_address.r).cell(cell_address.c);
-      console.log('minn ', dataArray[i - 1]);
-      // cell.value(dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, '')).style({ fontFamily: "Arial" })
       cell.value(dataArray[i - 1] ? dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, ''): '').style({ fontFamily: "Arial" })
     }
     let cellChk = sheet.row(R).cell(15 + i)
@@ -104,13 +95,60 @@ const setResultToSheet = (sheet, range) => {
   }
 }
 
+/// translator
+
+const Clean = (val) => {
+  val = val.replace(/&quot;/g, '\"')
+  val = val.replace("%2C", ",")
+  val = val.replace("&#39;", "'")
+  // val = val.replace(ChrW(12290), ".")
+  return val
+}
+
+const ConvertToGet = (val) => {
+  // val = val.replace("\r\n", "%0A")
+  val = val.replace(/(\r\n|\n|\r)/gm, "")
+  val = val.replace("(", "%28")
+  val = val.replace(")", "%29")
+  return val
+}
+
+const translateTextFromGoogle = async (translateFrom, translateTo, text) => {
+  text = text.toString()
+  let getParam = encodeURIComponent(ConvertToGet(text))
+  let translatedText;
+  try {
+    const response = await request(`https://translate.google.pl/m?hl=${translateFrom}&sl=${translateFrom}&tl=${translateTo}&ie=UTF-8&prev=_m&q=${getParam}`)
+    if (response) {
+      translatedText = response.match(/<div\s+class="result-container">(.*?)<\/div>/gi)[0].replace(/(<\/?[^>]+>)/gi, '');
+    }
+    return Clean(translatedText)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const translateSheet = async (translateFrom, translateTo, sheet, range) => {
+  for (var R = range.s.r; R <= range.e.r; ++R) {
+    for (var C = range.s.c; C <= range.e.c; ++C) {
+      var cell_address = { c: C, r: R };
+      const cell = sheet.row(cell_address.r).cell(cell_address.c);
+      var desired_value = (cell ? cell.value() : undefined)
+      if (desired_value) {
+        desired_value = await translateTextFromGoogle(translateFrom, translateTo, desired_value)
+      }
+      cell.value(desired_value).style({ fontFamily: "Arial" })
+    }
+  }
+}
+
 export {
   cloneFileCsv,
   sendFileToClient,
   createEmptyFileOfSize,
   convertJsonToCsvTestCase,
   cloneFileTemplateExcel,
-  makeDir, splitArray, setValueToSheet, setResultToSheet
+  makeDir, splitArray, setValueToSheet, setResultToSheet, translateSheet
 }
 
 

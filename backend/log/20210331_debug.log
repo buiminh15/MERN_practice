@@ -414,3 +414,5 @@
     at xPoweredByMiddleware (D:\2. Fun\7. NodeJs\MERN_practice\backend\node_modules\helmet\dist\middlewares\x-powered-by\index.js:6:3)
     at internalNext (D:\2. Fun\7. NodeJs\MERN_practice\backend\node_modules\helmet\dist\index.js:89:6)
     at xFrameOptionsMiddleware (D:\2. Fun\7. NodeJs\MERN_practice\backend\node_modules\helmet\dist\middlewares\x-frame-options\index.js:21:3)
+[32minfo[39m: Connected to MongoDB
+[32minfo[39m: Listening to port 3000
