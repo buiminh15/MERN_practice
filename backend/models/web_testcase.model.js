@@ -1,21 +1,23 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import TestCaseSchema from './Testcase.model';
 
-const TestCaseSchema = mongoose.Schema({
-  test_case: {
-    type: String,
-    require: true,
-  }
-}, {
-  timestamps: true
-}
-);
+// const TestCaseSchema = new mongoose.Schema({
+//   test_case: {
+//     type: String,
+//     require: true,
+//   }
+// }, {
+//   timestamps: true
+// }
+// );
 
-const webTestcaseSchema = mongoose.Schema({
+const webTestcaseSchema = new mongoose.Schema({
   languages: {
     type: String,
     enum: ['en', 'ja', 'vi'],
     default: 'en',
   },
+  name: { type: String, require: true , default: 'web-testcase'},
   login_testcases: [TestCaseSchema],
   general_testcases: [TestCaseSchema],
   gui_and_usability_testcases: [TestCaseSchema],

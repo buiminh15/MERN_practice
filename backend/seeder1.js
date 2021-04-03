@@ -43,7 +43,7 @@ const importData = async () => {
 
 const deleteData = async () => {
   try {
-    await Testcase.deleteMany();
+    await WebTestcase.deleteMany();
     console.log('Data Destroyed...');
     process.exit();
   } catch (error) {

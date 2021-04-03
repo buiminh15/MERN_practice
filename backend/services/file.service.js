@@ -60,12 +60,23 @@ const genExcelFile = async (res, file_name) => {
 }
 
 const genExcelTestcaseFile = async (req, res) => {
-    const { field } = req.body
+    const { field, name } = req.body
+    console.log('name', name)
+    const ids = ['606804b090af3506e4af5fc1', '606804b090af3506e4af5fc2']
     let dataArray;
     let arrayOfArrays;
     let file_name = 'minhbb_test.csv';
+    const subDoc = `${field}._id`
+    console.log(subDoc)
     try {
         const testcases = await WebTestcase.find({});
+        // const a = await WebTestcase.find({}).where('_id').in(ids).exec();
+        // const a = await WebTestcase.find().populate(field).select('test_case').exec();
+        // const a = await WebTestcase.find().populate(field).exec();
+        // const a = await WebTestcase.find().where('_id').in(ids).exec();;
+
+        const a = await WebTestcase.find({ name }).populate(`${field}`).exec();
+        console.log(a)
         await convertJsonToCsvTestCase(testcases[0][`${field}`], file_name, ['test_case'])
         const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
         dataArray = data.replace(/"$/gm, '",');
@@ -80,7 +91,7 @@ const genExcelTestcaseFile = async (req, res) => {
             setResultToSheet(sheet, rangeResult)
         }
         await workbook.toFileAsync("./out.xlsx")
-        res.json({ message: 'Done' })
+        res.json({ message: a })
 
     } catch (error) {
         console.log(error);

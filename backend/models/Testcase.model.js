@@ -6,6 +6,6 @@ const TestCaseSchema = new mongoose.Schema({
   },
 });
 
-const Testcase = mongoose.model('Testcase', TestCaseSchema);
+// const Testcase = mongoose.model('Testcase', TestCaseSchema);
 
-export default Testcase;
+export default TestCaseSchema;
