@@ -18,6 +18,7 @@ import Testcase from '../models/testcase.model';
 import WebTestcase from '../models/web_testcase.model';
 import { MIME_TYPE, DESTINATION_PATH } from '../utils/constants';
 import httpStatus from 'http-status';
+import { ObjectId } from 'mongodb';
 
 const filePath = path.join(__dirname, '..', 'templates', 'test.xlsx')
 const fileTransPath = path.join(__dirname, '..', 'templates', 'dich.xlsx')
@@ -67,16 +68,16 @@ const genExcelTestcaseFile = async (req, res) => {
     let arrayOfArrays;
     let file_name = 'minhbb_test.csv';
     const subDoc = `${field}._id`
-    console.log(subDoc)
     try {
         const testcases = await WebTestcase.find({});
         // const a = await WebTestcase.find({}).where('_id').in(ids).exec();
         // const a = await WebTestcase.find().populate(field).select('test_case').exec();
-        // const a = await WebTestcase.find().populate(field).exec();
+        // const a = await WebTestcase.find({ 'security_testing_testcases._id': { $in: ['60683e66437ef33e50b06601']}});
+        const a = await WebTestcase.find({ 'security_testing_testcases._id': ObjectId['60683e66437ef33e50b06602']});
         // const a = await WebTestcase.find().where('_id').in(ids).exec();;
 
-        const a = await WebTestcase.find({ name }).populate(`${field}`).exec();
-        console.log(a)
+        // const a = await WebTestcase.findOne({ 'security_testing_testcases._id':'60683e66437ef33e50b06601' });
+
         await convertJsonToCsvTestCase(testcases[0][`${field}`], file_name, ['test_case'])
         const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
         dataArray = data.replace(/"$/gm, '",');

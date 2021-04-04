@@ -11,13 +11,12 @@ import TestCaseSchema from './Testcase.model';
 // }
 // );
 
-const webTestcaseSchema = new mongoose.Schema({
+const webTestcaseSchema = mongoose.Schema({
   languages: {
     type: String,
     enum: ['en', 'ja', 'vi'],
     default: 'en',
   },
-  name: { type: String, require: true , default: 'web-testcase'},
   login_testcases: [TestCaseSchema],
   general_testcases: [TestCaseSchema],
   gui_and_usability_testcases: [TestCaseSchema],
