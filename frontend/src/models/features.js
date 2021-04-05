@@ -179,7 +179,7 @@ export const features = [{
     component: DataComparer
 },
 {
-    title: "Generate Testcase File",
+    title: "Testcase file generator",
     subTitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel faucibus lorem.",
     description: "Aenean vel accumsan nulla, ac efficitur dui. Duis vitae efficitur est. Sed lorem sem, sodales quis eros imperdiet, dignissim mattis felis. " +
         "Duis orci nulla, varius a velit at, consectetur placerat est. Duis molestie, augue a imperdiet sodales, nulla velit lobortis elit, nec sollicitudin leo mi ac est. Cras id ante et augue sodales aliquam. Donec luctus dui augue, eleifend scelerisque enim pharetra ac. Sed sollicitudin, odio at auctor sodales, nisi urna tincidunt magna, et sollicitudin leo lectus sed mauris. Phasellus tristique dolor enim, sed dignissim augue malesuada interdum. " +
