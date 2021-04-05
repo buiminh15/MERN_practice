@@ -8,3 +8,10 @@ export const CATEGORY = {
   IMAGE_GENERATOR: 'image-generator',
   DATA_COMPARER: 'data-comparer',
 };
+
+export const TAB_COMPONENT_SELECT_LIST = [
+        { category: 'tester', selectedItem: 'Apple', list: ['Apple', 'Orange', 'Mango'] },
+        { category: 'dev', selectedItem: 'Apple1', list: ['Apple1', 'Orange', 'Mango'] },
+        { category: 'pm', selectedItem: 'Apple2', list: ['Apple2', 'Orange', 'Mango'] },
+        { category: 'comtor', selectedItem: 'Apple3', list: ['Apple3', 'Orange', 'Mango'] },
+    ]
