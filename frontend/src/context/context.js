@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { features } from '../models/features';
 import reducer from '../redux/reducer';
-import { DELETE_TEXTS, SET_CONTENT, HANDLE_COPY } from '../redux/actions';
+import { DELETE_TEXTS, SET_CONTENT, HANDLE_COPY, SET_SELECTED_ITEM_LEFT_CONTENT_TAB_COMPONENT } from '../redux/actions';
 
 const initialState = {
   content: '',
@@ -22,6 +22,7 @@ const initialState = {
   isFileGenerating: false,
   initFormatFile: 'TXT',
   fileName: '',
+  indexOfSelectedItemLeftContentTabComponent: 0,
 };
 
 const AppContext = React.createContext();
@@ -44,9 +45,13 @@ const AppProvider = ({ children }) => {
   const getFeature = (category) => {
     return features.filter((item) => item.name === category)[0];
   }
+  const selectedItemLeftContentTabComponent = (index) => {
+    dispatch({ type: SET_SELECTED_ITEM_LEFT_CONTENT_TAB_COMPONENT, payload: index });
+  }
+
   return (
     <AppContext.Provider
-      value={{ ...state, handleState, deleteTexts, handleCopy, getFeature }}
+      value={{ ...state, handleState, deleteTexts, handleCopy, getFeature, selectedItemLeftContentTabComponent }}
     >
       {children}
     </AppContext.Provider>

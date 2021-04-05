@@ -22,10 +22,10 @@ export default function ContentTabComponent(props) {
     }
     return (
         <div className='row'>
-            <div className="col-3">
+            <div className="col-3" style={{ paddingLeft: 0, paddingRight: 0, borderRadius: 0 }}>
                 <LeftContentTabComponent selectList={props.list} />
             </div>
-            <div className="col-9">
+            <div className="col-9" style={{ paddingLeft: 0, paddingRight: 0 }}>
                 {renderRightContent()}
             </div>
         </div>

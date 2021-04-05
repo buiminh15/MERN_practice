@@ -9,6 +9,7 @@ export default function Home() {
         { key: 'dev', value: 'Dev' },
         { key: 'pm', value: 'PM' },
         { key: 'comtor', value: 'Comtor' },
+        { key: 'excel', value: 'Excel' },
     ]
     const defaultActiveKey = 'tester'
     return (

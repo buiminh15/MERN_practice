@@ -6,6 +6,7 @@ import GuidGenerator from '../views/features/GuidGenerator'
 import PairwiseGenerator from '../views/features/PairwiseGenerator'
 import PictureGenerator from '../views/features/PictureGenerator'
 import TextGenerator from '../views/features/TextGenerator'
+import TestcaseFileGenerator from '../views/features/TestcaseFileGenerator'
 
 export const features = [{
     title: "Data generator",
@@ -176,6 +177,22 @@ export const features = [{
         tag: "With the help of the Data comparer, you can compare data online in JSON, XML, CSV, YAML, TXT, ARRAY, CSS formats and find differences between them. It's a free and online tool."
     },
     component: DataComparer
-}
+},
+{
+    title: "Generate Testcase File",
+    subTitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel faucibus lorem.",
+    description: "Aenean vel accumsan nulla, ac efficitur dui. Duis vitae efficitur est. Sed lorem sem, sodales quis eros imperdiet, dignissim mattis felis. " +
+        "Duis orci nulla, varius a velit at, consectetur placerat est. Duis molestie, augue a imperdiet sodales, nulla velit lobortis elit, nec sollicitudin leo mi ac est. Cras id ante et augue sodales aliquam. Donec luctus dui augue, eleifend scelerisque enim pharetra ac. Sed sollicitudin, odio at auctor sodales, nisi urna tincidunt magna, et sollicitudin leo lectus sed mauris. Phasellus tristique dolor enim, sed dignissim augue malesuada interdum. " +
+        "Praesent vestibulum dui sit amet eros fermentum euismod. Integer at interdum lorem.  ",
+    icon: ["fas", "window-close"],
+    path: "/testcase-file-generator/",
+    name: "testcase-file-generator",
+    meta: {
+        layout: "main",
+        title: "Data comparer - Diff tool to compare your data free and online",
+        tag: "With the help of the Data comparer, you can compare data online in JSON, XML, CSV, YAML, TXT, ARRAY, CSS formats and find differences between them. It's a free and online tool."
+    },
+    component: TestcaseFileGenerator
+},
 ];
 
