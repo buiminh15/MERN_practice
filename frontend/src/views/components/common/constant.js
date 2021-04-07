@@ -9,6 +9,11 @@ export const CATEGORY = {
   DATA_COMPARER: 'data-comparer',
 };
 
+export const CATEGORY_COMTOR = {
+  FILE_TRANSLATOR: 'file-translator'
+
+}
+
 export const TAB_COMPONENT_SELECT_LIST = [
         { category: 'tester', selectedItem: 'Apple', list: ['Apple', 'Orange', 'Mango'] },
         { category: 'dev', selectedItem: 'Apple1', list: ['Apple1', 'Orange', 'Mango'] },

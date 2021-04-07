@@ -1,0 +1,1 @@
+export const URL_LINK_TRANSLATOR = 'https://www.onlinedoctranslator.com/en/'
