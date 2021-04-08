@@ -5,5 +5,7 @@ import ApiError from '../utils/ApiError';
 const getTestcasesByField = async () => {
   return WebTestcase.find({}, (err, testcases) => {
     if (err) throw new ApiError(httpStatus.NOT_FOUND, 'Not found any testcase')
-  });
+  }).select('-languages -_id -createdAt -updatedAt -__v');
 };
+
+export default { getTestcasesByField }
