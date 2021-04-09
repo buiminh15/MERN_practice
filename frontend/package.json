@@ -12,11 +12,13 @@
     "dummy-file-generator": "^1.0.0",
     "faker": "^5.1.0",
     "file-saver": "^2.0.5",
+    "jsx-runtime": "^1.2.0",
     "lodash": "^4.17.20",
     "lorem-ipsum": "^2.0.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.3",
     "react-copy-to-clipboard": "^5.0.2",
+    "react-data-table-component": "^6.11.7",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.9.0",
     "react-icons": "^3.11.0",
@@ -24,6 +26,7 @@
     "react-scripts": "^2.1.8",
     "react-textarea-autosize": "^8.3.0",
     "streamsaver": "^2.0.5",
+    "styled-components": "^5.2.3",
     "test-file-generator": "^1.0.2"
   },
   "scripts": {

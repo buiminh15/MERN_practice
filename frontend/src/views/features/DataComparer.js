@@ -8,13 +8,10 @@ import { CATEGORY } from '../components/common/constant';
 
 export default function DataComparer() {
     var {
-      initFormatData,
       firstDataComparer,
       secondDataComparer,
       amountAddedDataComparer,
       amountDeletedDataComparer,
-      handleState,
-      content,
       getFeature,
     } = useGlobalContext();
 

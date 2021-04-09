@@ -7,6 +7,7 @@ export const CATEGORY = {
   FILE_GENERATOR: 'file-generator',
   IMAGE_GENERATOR: 'image-generator',
   DATA_COMPARER: 'data-comparer',
+  TESTCASE_FILE_GENERATOR: 'testcase-file-generator',
 };
 
 export const CATEGORY_COMTOR = {
