@@ -9,7 +9,8 @@ let url =
 
 // Load models
 // const Testcase = require( './models/Testcase.model')
-import WebTestcase from './models/web_testcase.model'
+// import WebTestcase from './models/web_testcase.model'
+import WebTest from './models/webtest.model'
 
 // Connect to DB
 mongoose.connect(url, {
@@ -24,14 +25,15 @@ mongoose.connect(url, {
 //   fs.readFileSync(`${__dirname}/demo.json`, 'utf-8')
 // );
 const testcases = JSON.parse(
-  fs.readFileSync(`${__dirname}/demo1.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/demo2.json`, 'utf-8')
 );
 
 
 // Import into DB
 const importData = async () => {
   try {
-    await WebTestcase.create(testcases);
+    // await WebTestcase.create(testcases);
+    await WebTest.insertMany(testcases);
     console.log('Data imported...');
     process.exit();
   } catch (error) {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TestCaseSchema = mongoose.Schema({
-  test_case: {
+  testcase: {
     type: String,
   },
 });

@@ -1,0 +1,14 @@
+{
+  "name": "General Testcase 111",
+  "testcases": [
+    {
+      "testcase": "All mandatory fields should be validated and indicated by asterisk (*) 1 symbol"
+    },
+    {
+      "testcase": "All mandatory fields should be validated and indicated by asterisk (*)  2symbol"
+    },
+    {
+      "testcase": "All mandatory fields should be validated and indicated by asterisk (*) 3 symbol"
+    }
+  ]
+}
