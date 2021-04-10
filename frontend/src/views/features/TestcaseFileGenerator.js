@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import Header from '../components/common/Header';
-import { useEffect } from 'react';
 import { CATEGORY } from '../components/common/constant';
 import { URL_SERVER } from '../../helpers/constant';
 import { useGlobalContext } from '../../context/context';
@@ -15,17 +14,17 @@ export default function TestcaseFileGenerator() {
   const feature = getFeature(CATEGORY.TESTCASE_FILE_GENERATOR);
 
   var [fields, setFields] = useState([])
-
-  const data = [
-    { id: 1, title: 'Conan the Barbarian1', year: '1982' },
-    { id: 2, title: 'Conan the Barbarian2', year: '1983' },
-    { id: 3, title: 'Conan the Barbarian3', year: '1984' },
-    { id: 4, title: 'Conan the Barbarian4', year: '1985' },
-  ]
-  const columns = [
+  var [data, setData] = useState()
+  // const data = [
+  //   { _id: 1, title: 'Conan the Barbarian1', year: '1982' },
+  //   { _id: 2, title: 'Conan the Barbarian2', year: '1983' },
+  //   { _id: 3, title: 'Conan the Barbarian3', year: '1984' },
+  //   { _id: 4, title: 'Conan the Barbarian4', year: '1985' },
+  // ]
+  const columns = useMemo(() => [
     {
       name: 'Title',
-      selector: 'title',
+      selector: 'test_case',
       sortable: true,
     },
     {
@@ -34,7 +33,7 @@ export default function TestcaseFileGenerator() {
       sortable: true,
       right: true,
     },
-  ];
+  ])
 
 
   useEffect(async () => {
@@ -42,6 +41,7 @@ export default function TestcaseFileGenerator() {
       const res = await request.get(URL_SERVER.GET_TESTCASES)
       const fieldArr = []
       if (res.status === 200) {
+        setData(res.data.testcases[0])
         for (const property in res.data.testcases[0]) {
           fieldArr.push(property)
         }
@@ -63,11 +63,7 @@ export default function TestcaseFileGenerator() {
   const handleClick = () => {
 
   }
-  const handleChange = (state) => {
-    // You can use setState or dispatch with something like Redux so we can use the retrieved data
-    console.log('state', state)
-    // console.log('Selected Rows: ', state.selectedRows);
-  };
+  const handleChange = useCallback(state => console.log(state));
   return (
     <>
       <Header />
@@ -85,14 +81,14 @@ export default function TestcaseFileGenerator() {
             )}
           </div>
           <div className="col-9 border rounded">
-            <DataTable
+            {data && <DataTable
               columns={columns}
               data={data}
               selectableRows
               selectableRowsHighlight
               Clicked
-              onSelectedRowsChange={(e) => handleChange(e)}
-            />
+              onSelectedRowsChange={handleChange}
+            />}
           </div>
         </div>
       </div>
