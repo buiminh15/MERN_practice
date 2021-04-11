@@ -25,7 +25,8 @@ export default function TestcaseFileGenerator() {
   );
 
   var [fields, setFields] = useState([])
-  var [selectedFields, setSelectedFields] = useState('login_testcases')
+  var [selectedField, setSelectedField] = useState('login_testcases')
+  var [selectedIds, setSelectedIds] = useState([])
   var [data, setData] = useState([])
 
   const columns = useMemo(() => [
@@ -58,12 +59,11 @@ export default function TestcaseFileGenerator() {
   useEffect(() => {
     handleFields()
     getTableData()
-  }, [selectedFields])
+  }, [selectedField])
 
   const getTableData = async () => {
     try {
-      const res = await request.get(URL_SERVER.GET_TESTCASES + '/' + selectedFields)
-      console.log(res)
+      const res = await request.get(URL_SERVER.GET_TESTCASES + '/' + selectedField)
       if (res.status === 200) {
         setData(res.data.testcases[0].testcases)
       }
@@ -73,10 +73,19 @@ export default function TestcaseFileGenerator() {
   }
 
   const handleClick = (e) => {
-    console.log(e.target.name.toLowerCase().replace(' ', '_'))
-    setSelectedFields(e.target.name.toLowerCase().replace(' ', '_'))
+    setSelectedField(e.target.name.toLowerCase().replace(' ', '_'))
   }
-  const handleChange = useCallback(state => console.log(state));
+  const handleChange = useCallback(state => setSelectedIds(state.selectedRows.map(row => row._id)));
+
+  const handleExport = () => {
+    console.log(selectedIds)
+    const body = {
+      field_name: selectedField,
+      ids: selectedIds
+    }
+
+  }
+
   return (
     <>
       <Header />
@@ -94,6 +103,7 @@ export default function TestcaseFileGenerator() {
             )}
           </div>
           <div className="col-9 border rounded">
+            <button className="btn btn-primary" onClick={handleExport}>Export</button>
             {data.length > 0 && <DataTable
               columns={columns}
               data={data}
@@ -103,6 +113,7 @@ export default function TestcaseFileGenerator() {
               onSelectedRowsChange={handleChange}
               wrap
             />}
+      
           </div>
         </div>
       </div>
