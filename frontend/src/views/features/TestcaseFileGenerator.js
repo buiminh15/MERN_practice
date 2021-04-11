@@ -5,63 +5,76 @@ import { URL_SERVER } from '../../helpers/constant';
 import { useGlobalContext } from '../../context/context';
 import request from '../../service/request';
 import DataTable from 'react-data-table-component';
-
+import { TESTCASE_FIELDS } from '../../helpers/constant'
 export default function TestcaseFileGenerator() {
   var {
     getFeature,
   } = useGlobalContext();
 
   const feature = getFeature(CATEGORY.TESTCASE_FILE_GENERATOR);
+  const CustomTitle = ({ row }) => (
+    <div>
+      {}
+      <div>
+        <div data-tag="allowRowEvents" style={{ color: 'grey', overflow: 'hidden', whiteSpace: 'wrap', textOverflow: 'ellipses' }}>
+          {}
+          {row.testcase}
+        </div>
+      </div>
+    </div>
+  );
 
   var [fields, setFields] = useState([])
-  var [data, setData] = useState()
-  // const data = [
-  //   { _id: 1, title: 'Conan the Barbarian1', year: '1982' },
-  //   { _id: 2, title: 'Conan the Barbarian2', year: '1983' },
-  //   { _id: 3, title: 'Conan the Barbarian3', year: '1984' },
-  //   { _id: 4, title: 'Conan the Barbarian4', year: '1985' },
-  // ]
+  var [selectedFields, setSelectedFields] = useState('login_testcases')
+  var [data, setData] = useState([])
+
   const columns = useMemo(() => [
+
     {
       name: 'Title',
-      selector: 'test_case',
+      selector: 'testcase',
       sortable: true,
+      maxWidth: '60%',
+      cell: row => <CustomTitle row={row} />,
     },
-    {
-      name: 'Year',
-      selector: 'year',
-      sortable: true,
-      right: true,
-    },
+    // {
+    //   name: 'Title1',
+    //   selector: '1',
+    //   sortable: true,
+    //   // maxWidth: '600px',
+    //   // cell: row => <CustomTitle row={row} />,
+    // },
+
   ])
 
+  const handleFields = () => {
+    const arr = []
+    for (const key in TESTCASE_FIELDS) {
+      arr.push(TESTCASE_FIELDS[key])
+    }
+    setFields(arr)
+  }
 
-  useEffect(async () => {
+  useEffect(() => {
+    handleFields()
+    getTableData()
+  }, [selectedFields])
+
+  const getTableData = async () => {
     try {
-      const res = await request.get(URL_SERVER.GET_TESTCASES)
-      const fieldArr = []
+      const res = await request.get(URL_SERVER.GET_TESTCASES + '/' + selectedFields)
+      console.log(res)
       if (res.status === 200) {
-        setData(res.data.testcases[0])
-        for (const property in res.data.testcases[0]) {
-          fieldArr.push(property)
-        }
-        setFields(fieldArr)
+        setData(res.data.testcases[0].testcases)
       }
     } catch (error) {
       console.log(error)
     }
-
-  }, [])
-
-  const renderFieldButtons = () => {
-    if (fields.length > 0) {
-      fields.map(field =>
-        <button className="btn btn-primary mx-2">{field}</button>
-      )
-    }
   }
-  const handleClick = () => {
 
+  const handleClick = (e) => {
+    console.log(e.target.name.toLowerCase().replace(' ', '_'))
+    setSelectedFields(e.target.name.toLowerCase().replace(' ', '_'))
   }
   const handleChange = useCallback(state => console.log(state));
   return (
@@ -81,13 +94,14 @@ export default function TestcaseFileGenerator() {
             )}
           </div>
           <div className="col-9 border rounded">
-            {data && <DataTable
+            {data.length > 0 && <DataTable
               columns={columns}
               data={data}
               selectableRows
               selectableRowsHighlight
-              Clicked
+              pagination
               onSelectedRowsChange={handleChange}
+              wrap
             />}
           </div>
         </div>
