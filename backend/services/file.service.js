@@ -69,8 +69,6 @@ const genExcelTestcaseFile = async (req, res) => {
         range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
         rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
     }
-    // range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
-    // rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
     let dataArray;
     let arrayOfArrays;
     let file_name = 'minhbb_test.csv';
@@ -92,7 +90,8 @@ const genExcelTestcaseFile = async (req, res) => {
             setResultToSheet(sheet, rangeResult)
         }
         await workbook.toFileAsync("./out.xlsx")
-        res.json({ message: 'done' })
+        console.log('aaaa')
+        res.download("./out.xlsx")
 
     } catch (error) {
         console.log(error);
@@ -108,6 +107,7 @@ const generateExcelTranslatorFile = async (req, res) => {
     }
     await workbook.toFileAsync("./out.xlsx")
     res.status(httpStatus.OK).json({ message: 'Done' })
+    
 }
 
 export { genTextFile, genExcelFile, genExcelTestcaseFile, generateExcelTranslatorFile }

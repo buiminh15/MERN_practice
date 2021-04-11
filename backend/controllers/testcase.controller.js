@@ -10,9 +10,7 @@ const getTestcases = catchAsync(async (req, res) => {
 });
 
 const getTestcasesByIds = catchAsync(async (req, res) => {
-  // const { name } = req.body
-  const name = 'login_testcases'
-  const ids = ['607103cfbc7b4528282ad94a', '607103cfbc7b4528282ad949']
+  const { name, ids } = req.body
   const testcases = await testcaseService.getTestcasesByFieldAndIds(name, ids);
   res.status(httpStatus.OK).json({ testcases });
 });
