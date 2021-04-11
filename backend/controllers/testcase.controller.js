@@ -4,7 +4,8 @@ import catchAsync from '../utils/catchAsync';
 import testcaseService from '../services/web_testcase.service';
 
 const getTestcases = catchAsync(async (req, res) => {
-  const testcases = await testcaseService.getTestcasesByField();
+  const { name } = req.params
+  const testcases = await testcaseService.getTestcasesByField(name);
   res.status(httpStatus.OK).json({ testcases });
 });
 
