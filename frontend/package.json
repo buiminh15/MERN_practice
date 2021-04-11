@@ -12,6 +12,7 @@
     "dummy-file-generator": "^1.0.0",
     "faker": "^5.1.0",
     "file-saver": "^2.0.5",
+    "js-file-download": "^0.4.12",
     "jsx-runtime": "^1.2.0",
     "lodash": "^4.17.20",
     "lorem-ipsum": "^2.0.3",

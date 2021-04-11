@@ -6,6 +6,7 @@ import { useGlobalContext } from '../../context/context';
 import request from '../../service/request';
 import DataTable from 'react-data-table-component';
 import { TESTCASE_FIELDS } from '../../helpers/constant'
+import fileDownload from 'js-file-download'
 export default function TestcaseFileGenerator() {
   var {
     getFeature,
@@ -77,13 +78,14 @@ export default function TestcaseFileGenerator() {
   }
   const handleChange = useCallback(state => setSelectedIds(state.selectedRows.map(row => row._id)));
 
-  const handleExport = () => {
-    console.log(selectedIds)
+  const handleExport = async () => {
     const body = {
       field_name: selectedField,
       ids: selectedIds
     }
-
+    const res = await request.post(URL_SERVER.DOWNLOAD_TESTCASES_FILE, body)
+    fileDownload(res.data, 'filename.xlsx');
+    console.log(res)
   }
 
   return (
@@ -113,7 +115,7 @@ export default function TestcaseFileGenerator() {
               onSelectedRowsChange={handleChange}
               wrap
             />}
-      
+
           </div>
         </div>
       </div>
