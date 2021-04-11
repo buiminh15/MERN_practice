@@ -1,34 +1,4 @@
-"Check for SQL injection attacks"
-"Secure pages should use HTTPS protocol"
-"Page crash should not reveal application or server info. Error 
-page should be displayed for this"
-"Escape special characters in input"
-"Error messages should not reveal any sensitive information"
-"All credentials should be transferred over an encrypted channel"
-"Test password security and password policy enforcement"
-"Check application logout functionality"
-"Check for Brute Force Attacks"
-"Cookie information should be stored in encrypted format only"
-"Check session cookie duration and session termination after 
-timeout or logout"
-"Session tokens should be transmitted over secured channel"
-"Password should not be stored in cookies"
-"Test for Denial of Service attacks"
-"Test for memory leakage"
-"Test unauthorized application access by manipulating variable 
-values in browser address bar"
-"Test file extension handing so that exe files are not uploaded 
-and executed on server"
-"Sensitive fields like passwords and credit card information 
-should not have auto complete enabled"
-"File upload functionality should use file type restrictions and 
-also anti-virus for scanning uploaded files"
-"Check if directory listing is prohibited"
-"Password and other sensitive fields should be masked while 
-typing"
-"Check if forgot password functionality is secured with features 
-like temporary password expiry after specified hours and security 
-question is asked before changing or requesting new password"
-"Verify CAPTCHA functionality"
-"Check if important events are logged in log files"
-"Check if access privileges are implemented correctly."
+"All fields on page (e.g. text box, radio options, dropdown 
+lists) should be aligned properly"
+"Numeric values should be right justified unless specified 
+otherwise"

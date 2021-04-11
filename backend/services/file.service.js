@@ -15,16 +15,14 @@ import {
     translateSheet
 } from '../utils/functions';
 import Testcase from '../models/testcase.model';
-import WebTestcase from '../models/web_testcase.model';
+import WebTestcase from '../models/webtest.model';
 import { MIME_TYPE, DESTINATION_PATH } from '../utils/constants';
 import httpStatus from 'http-status';
-import { ObjectId } from 'mongodb';
 
 const filePath = path.join(__dirname, '..', 'templates', 'test.xlsx')
 const fileTransPath = path.join(__dirname, '..', 'templates', 'dich.xlsx')
 // const fileCsvPath = path.join(__dirname, '..', 'upload', 'test.csv')
-const range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
-const rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
+
 const rangeTrans = { s: { c: 1, r: 1 }, e: { c: 75, r: 100 } }
 
 const getFileCsvPath = (file_name) => {
@@ -61,24 +59,26 @@ const genExcelFile = async (res, file_name) => {
 }
 
 const genExcelTestcaseFile = async (req, res) => {
-    const { field, name } = req.body
-    console.log('name', name)
-    const ids = ['606804b090af3506e4af5fc1', '606804b090af3506e4af5fc2']
+    const { field_name, ids } = req.body
+    let range;
+    let rangeResult;
+    if (ids.length < MAX_LINE_IN_SHEET) {
+        range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + ids.length - 1} }
+        rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + ids.length - 1} }
+    } else {
+        range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
+        rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
+    }
+    // range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
+    // rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
     let dataArray;
     let arrayOfArrays;
     let file_name = 'minhbb_test.csv';
-    const subDoc = `${field}._id`
     try {
-        const testcases = await WebTestcase.find({});
-        // const a = await WebTestcase.find({}).where('_id').in(ids).exec();
-        // const a = await WebTestcase.find().populate(field).select('test_case').exec();
-        // const a = await WebTestcase.find({ 'security_testing_testcases._id': { $in: ['60683e66437ef33e50b06601']}});
-        const a = await WebTestcase.find({ 'security_testing_testcases._id': ObjectId['60683e66437ef33e50b06602']});
-        // const a = await WebTestcase.find().where('_id').in(ids).exec();;
+        const testcases = await WebTestcase.find({ name: field_name })
+        const filteredArray = testcases[0].testcases.filter(testcase => ids.includes(testcase._id.toString()));
 
-        // const a = await WebTestcase.findOne({ 'security_testing_testcases._id':'60683e66437ef33e50b06601' });
-
-        await convertJsonToCsvTestCase(testcases[0][`${field}`], file_name, ['test_case'])
+        await convertJsonToCsvTestCase(filteredArray, file_name, ['testcase'])
         const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
         dataArray = data.replace(/"$/gm, '",');
         dataArray = dataArray.split(/,$/gm)
@@ -92,7 +92,7 @@ const genExcelTestcaseFile = async (req, res) => {
             setResultToSheet(sheet, rangeResult)
         }
         await workbook.toFileAsync("./out.xlsx")
-        res.json({ message: a })
+        res.json({ message: 'done' })
 
     } catch (error) {
         console.log(error);

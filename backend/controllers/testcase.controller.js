@@ -9,6 +9,15 @@ const getTestcases = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json({ testcases });
 });
 
+const getTestcasesByIds = catchAsync(async (req, res) => {
+  // const { name } = req.body
+  const name = 'login_testcases'
+  const ids = ['607103cfbc7b4528282ad94a', '607103cfbc7b4528282ad949']
+  const testcases = await testcaseService.getTestcasesByFieldAndIds(name, ids);
+  res.status(httpStatus.OK).json({ testcases });
+});
+
+
 // const getTestcase = catchAsync(async (req, res) => {
 //   const _id = req.params.id
 //   const testcase = await testcaseService.getTestcase(_id);
@@ -31,4 +40,4 @@ const getTestcases = catchAsync(async (req, res) => {
 //   res.status(httpStatus.NO_CONTENT).send();
 // });
 
-export default { getTestcases }
+export default { getTestcases, getTestcasesByIds }
