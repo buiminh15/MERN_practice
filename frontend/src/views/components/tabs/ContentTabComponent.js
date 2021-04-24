@@ -1,21 +1,20 @@
 import React from 'react'
 import LeftContentTabComponent from './LeftContentTabComponent'
-import TesterCardList from '../card/TesterCardList'
-import DevCardList from '../card/DevCardList'
-import PmCardList from '../card/PmCardList'
-import ComtorCardList from '../card/ComtorCardList'
+import FeatureCardList from '../card/FeatureCardList'
 
 export default function ContentTabComponent(props) {
     const renderRightContent = () => {
         switch (props.category) {
             case 'tester':
-                return <TesterCardList />
+                return <FeatureCardList features={props.list.list}/>
             case 'pm':
-                return <PmCardList />
+                return <FeatureCardList />
             case 'dev':
-                return <DevCardList />
+                return <FeatureCardList />
             case 'comtor':
-                return <ComtorCardList />
+                return <FeatureCardList features={props.list.list}/>
+            case 'excel':
+                return <FeatureCardList features={props.list.list}/>
             default:
                 break;
         }
