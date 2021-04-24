@@ -76,14 +76,12 @@ const genExcelTestcaseFile = async (req, res) => {
     try {
         const testcases = await WebTestcase.find({ name: field_name })
         const filteredArray = testcases[0].testcases.filter(testcase => ids.includes(testcase._id.toString()));
-        console.log('filteredArray ', filteredArray)
         dataArray = convertJsonTestCase(filteredArray, ['testcase'])
         // await convertJsonToCsvTestCase(filteredArray, file_name, ['testcase'])
         // const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
         // dataArray = data.replace(/"$/gm, '",');
         // dataArray = dataArray.split(/,$/gm)
         arrayOfArrays = splitArray(dataArray, MAX_LINE_IN_SHEET)
-        console.log('arrayOfArrays ', arrayOfArrays)
         const workbook = await XlsxPopulate.fromFileAsync(filePath)
         for (let index = 0; index < arrayOfArrays.length; index++) {
             let sheet = workbook.sheet(index)
