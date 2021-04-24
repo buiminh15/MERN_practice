@@ -6,5 +6,6 @@ const router = express.Router();
 // router.post('/excel', filesController.generateExcelFile );
 router.post('/testcase/excel', filesController.generateTestcaseFile);
 router.post('/translator/excel', filesController.generateTranslatorFile);
+router.get('/tool-admin/excel', filesController.sendToolAdminFile);
 
 export default router;

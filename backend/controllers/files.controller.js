@@ -1,4 +1,10 @@
-import { genExcelFile, genExcelTestcaseFile, genTextFile, generateExcelTranslatorFile } from '../services/file.service';
+import {
+    genExcelFile,
+    genExcelTestcaseFile,
+    genTextFile,
+    generateExcelTranslatorFile,
+    sendToolExcelFileFunc
+} from '../services/file.service';
 
 const generateTextFile = (req, res, next) => {
     const { file_name, size } = req.body
@@ -17,5 +23,14 @@ const generateTestcaseFile = (req, res, next) => {
 const generateTranslatorFile = (req, res, next) => {
     generateExcelTranslatorFile(req, res);
 }
+const sendToolAdminFile = (req, res, next) => {
+    sendToolExcelFileFunc(req, res);
+}
 
-export default { generateTextFile, generateExcelFile, generateTestcaseFile, generateTranslatorFile }
+export default {
+    generateTextFile,
+    generateExcelFile,
+    generateTestcaseFile,
+    generateTranslatorFile,
+    sendToolAdminFile
+}

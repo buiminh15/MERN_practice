@@ -22,6 +22,7 @@ import httpStatus from 'http-status';
 
 const filePath = path.join(__dirname, '..', 'templates', 'test.xlsx')
 const fileTransPath = path.join(__dirname, '..', 'templates', 'dich.xlsx')
+const fileToolAdminPath = path.join(__dirname, '..', 'templates', 'ToolAdmin.xlsm')
 // const fileCsvPath = path.join(__dirname, '..', 'upload', 'test.csv')
 
 const rangeTrans = { s: { c: 1, r: 1 }, e: { c: 75, r: 100 } }
@@ -111,4 +112,14 @@ const generateExcelTranslatorFile = async (req, res) => {
 
 }
 
-export { genTextFile, genExcelFile, genExcelTestcaseFile, generateExcelTranslatorFile }
+const sendToolExcelFileFunc = (req, res) => {
+    res.status(httpStatus.OK).sendFile(fileToolAdminPath);
+}
+
+export {
+    genTextFile,
+    genExcelFile,
+    genExcelTestcaseFile,
+    generateExcelTranslatorFile,
+    sendToolExcelFileFunc
+}
