@@ -83,8 +83,12 @@ export default function TestcaseFileGenerator() {
       field_name: selectedField,
       ids: selectedIds
     }
-    const res = await request.post(URL_SERVER.DOWNLOAD_TESTCASES_FILE, body)
-    fileDownload(res.data, 'filename.xlsx');
+    const res = await request.post(URL_SERVER.DOWNLOAD_TESTCASES_FILE, body, { responseType: "arraybuffer" })
+    const blob = new Blob([res.data], {
+      type:
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    fileDownload(blob, 'filename.xlsx');
     console.log(res)
   }
 
@@ -101,7 +105,9 @@ export default function TestcaseFileGenerator() {
         <div className="row">
           <div className="col-3 border rounded">
             {fields.length > 0 && fields.map(field =>
-              <button key={field} name={field} className="btn btn-outline-primary btn-sm my-2 w-100" onClick={e => handleClick(e)}>{field}</button>
+              <button key={field}  name={field}
+                className="btn btn-outline-primary btn-sm my-2 w-100 text-wrap"
+                onClick={e => handleClick(e)}>{field}</button>
             )}
           </div>
           <div className="col-9 border rounded">
