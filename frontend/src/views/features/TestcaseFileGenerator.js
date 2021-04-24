@@ -1,4 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
+import Checkbox from '@material-ui/core/Checkbox';
+import Pagination from '@material-ui/lab/Pagination';
 import Header from '../components/common/Header';
 import { CATEGORY } from '../components/common/constant';
 import { URL_SERVER } from '../../helpers/constant';
@@ -7,6 +9,7 @@ import request from '../../service/request';
 import DataTable from 'react-data-table-component';
 import { TESTCASE_FIELDS } from '../../helpers/constant'
 import fileDownload from 'js-file-download'
+
 export default function TestcaseFileGenerator() {
   var {
     getFeature,
@@ -18,7 +21,7 @@ export default function TestcaseFileGenerator() {
       {}
       <div>
         <div data-tag="allowRowEvents" style={{ color: 'grey', overflow: 'hidden', whiteSpace: 'wrap', textOverflow: 'ellipses' }}>
-          {}
+          { }
           {row.testcase}
         </div>
       </div>
@@ -31,7 +34,6 @@ export default function TestcaseFileGenerator() {
   var [data, setData] = useState([])
 
   const columns = useMemo(() => [
-
     {
       name: 'Title',
       selector: 'testcase',
@@ -39,14 +41,6 @@ export default function TestcaseFileGenerator() {
       maxWidth: '60%',
       cell: row => <CustomTitle row={row} />,
     },
-    // {
-    //   name: 'Title1',
-    //   selector: '1',
-    //   sortable: true,
-    //   // maxWidth: '600px',
-    //   // cell: row => <CustomTitle row={row} />,
-    // },
-
   ])
 
   const handleFields = () => {
@@ -89,7 +83,6 @@ export default function TestcaseFileGenerator() {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
     fileDownload(blob, 'filename.xlsx');
-    console.log(res)
   }
 
   return (
@@ -105,23 +98,27 @@ export default function TestcaseFileGenerator() {
         <div className="row">
           <div className="col-3 border rounded">
             {fields.length > 0 && fields.map(field =>
-              <button key={field}  name={field}
+              <button key={field} name={field}
                 className="btn btn-outline-primary btn-sm my-2 w-100 text-wrap"
                 onClick={e => handleClick(e)}>{field}</button>
             )}
           </div>
           <div className="col-9 border rounded">
-            <button className="btn btn-primary" onClick={handleExport}>Export</button>
-            {data.length > 0 && <DataTable
-              columns={columns}
-              data={data}
-              selectableRows
-              selectableRowsHighlight
-              pagination
-              onSelectedRowsChange={handleChange}
-              wrap
-            />}
+            <div>
+              <button className="btn btn-primary" onClick={handleExport}>Export</button>
+              {data.length > 0 && <DataTable
+                columns={columns}
+                selectableRowsComponent={Checkbox}
+                selectableRowsComponentProps={{ color: "primary" }}
+                data={data}
+                noHeader
+                selectableRows
+                selectableRowsHighlight
+                pagination
+                onSelectedRowsChange={handleChange}
 
+              />}
+            </div>
           </div>
         </div>
       </div>

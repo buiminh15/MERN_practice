@@ -14,6 +14,10 @@ export const CATEGORY_COMTOR = {
   FILE_TRANSLATOR: 'file-translator'
 
 }
+export const CATEGORY_EXCEL = {
+  TOOL_ADMIN: 'tool-admin'
+
+}
 
 export const TAB_COMPONENT_SELECT_LIST = [
         { category: 'tester', selectedItem: 'Apple', list: ['Apple', 'Orange', 'Mango'] },
