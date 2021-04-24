@@ -7,6 +7,7 @@ import {
     createEmptyFileOfSize,
     cloneFileTemplateExcel,
     convertJsonToCsvTestCase,
+    convertJsonTestCase,
     sendFileToClient,
     cloneFileCsv,
     setResultToSheet,
@@ -63,8 +64,8 @@ const genExcelTestcaseFile = async (req, res) => {
     let range;
     let rangeResult;
     if (ids.length < MAX_LINE_IN_SHEET) {
-        range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + ids.length - 1} }
-        rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + ids.length - 1} }
+        range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + ids.length - 1 } }
+        rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + ids.length - 1 } }
     } else {
         range = { s: { c: 3, r: 8 }, e: { c: 3, r: 8 + MAX_LINE_IN_SHEET - 1 } }
         rangeResult = { s: { c: 3, r: 27 }, e: { c: 3, r: 27 + MAX_LINE_IN_SHEET - 1 } }
@@ -75,13 +76,14 @@ const genExcelTestcaseFile = async (req, res) => {
     try {
         const testcases = await WebTestcase.find({ name: field_name })
         const filteredArray = testcases[0].testcases.filter(testcase => ids.includes(testcase._id.toString()));
-
-        await convertJsonToCsvTestCase(filteredArray, file_name, ['testcase'])
-        const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
-        dataArray = data.replace(/"$/gm, '",');
-        dataArray = dataArray.split(/,$/gm)
+        console.log('filteredArray ', filteredArray)
+        dataArray = convertJsonTestCase(filteredArray, ['testcase'])
+        // await convertJsonToCsvTestCase(filteredArray, file_name, ['testcase'])
+        // const data = fs.readFileSync(getFileCsvPath(file_name), 'utf8')
+        // dataArray = data.replace(/"$/gm, '",');
+        // dataArray = dataArray.split(/,$/gm)
         arrayOfArrays = splitArray(dataArray, MAX_LINE_IN_SHEET)
-
+        console.log('arrayOfArrays ', arrayOfArrays)
         const workbook = await XlsxPopulate.fromFileAsync(filePath)
         for (let index = 0; index < arrayOfArrays.length; index++) {
             let sheet = workbook.sheet(index)
@@ -90,8 +92,9 @@ const genExcelTestcaseFile = async (req, res) => {
             setResultToSheet(sheet, rangeResult)
         }
         await workbook.toFileAsync("./out.xlsx")
-        console.log('aaaa')
-        res.download("./out.xlsx")
+        const excelFile = await workbook.outputAsync()
+        res.attachment("./out.xlsx");
+        res.send(excelFile);
 
     } catch (error) {
         console.log(error);
@@ -107,7 +110,7 @@ const generateExcelTranslatorFile = async (req, res) => {
     }
     await workbook.toFileAsync("./out.xlsx")
     res.status(httpStatus.OK).json({ message: 'Done' })
-    
+
 }
 
 export { genTextFile, genExcelFile, genExcelTestcaseFile, generateExcelTranslatorFile }

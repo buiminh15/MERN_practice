@@ -47,6 +47,14 @@ const convertJsonToCsvTestCase = async (datas, file_name, fieldsArr) => {
     console.error(err);
   }
 }
+
+const convertJsonTestCase = (datas, fieldsArr) => {
+  const fields = fieldsArr;
+  const result = datas.map(data => data[fields])
+
+  return result
+
+}
 const sendFileToClient = (res, file_name, mime_type) => {
   src.pipe(res);
 }
@@ -69,11 +77,17 @@ const splitArray = (array, MAX_LINE_IN_SHEET) => {
 
 const setValueToSheet = (sheet, range, dataArray) => {
   let i = 1
-  for (let R = range.s.r; R <= range.e.r; ++R) {
+  let limitRange;
+  if (range.e.r > dataArray.length) {
+    limitRange = range.e.r
+  } else {
+    limitRange = dataArray.length
+  }
+  for (let R = range.s.r; R <= limitRange; ++R) {
     for (let C = range.s.c; C <= range.e.c; ++C) {
       let cell_address = { c: C, r: R };
       const cell = sheet.row(cell_address.r).cell(cell_address.c);
-      cell.value(dataArray[i - 1] ? dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, ''): '').style({ fontFamily: "Arial" })
+      cell.value(dataArray[i - 1] ? dataArray[i - 1].replace(/^(\r\n|\n|\r)/gm, '') : '').style({ fontFamily: "Arial" })
     }
     let cellChk = sheet.row(R).cell(15 + i)
     cellChk.value('〇').style({ fontFamily: "Arial" })
@@ -147,8 +161,13 @@ export {
   sendFileToClient,
   createEmptyFileOfSize,
   convertJsonToCsvTestCase,
+  convertJsonTestCase,
   cloneFileTemplateExcel,
-  makeDir, splitArray, setValueToSheet, setResultToSheet, translateSheet
+  makeDir,
+  splitArray,
+  setValueToSheet,
+  setResultToSheet,
+  translateSheet
 }
 
 
