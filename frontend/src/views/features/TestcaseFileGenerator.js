@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import Checkbox from '@material-ui/core/Checkbox';
-import Pagination from '@material-ui/lab/Pagination';
 import Header from '../components/common/Header';
 import { CATEGORY } from '../components/common/constant';
 import { URL_SERVER } from '../../helpers/constant';
@@ -104,7 +103,6 @@ export default function TestcaseFileGenerator() {
             )}
           </div>
           <div className="col-9 border rounded">
-            <div>
               <button className="btn btn-primary" onClick={handleExport}>Export</button>
               {data.length > 0 && <DataTable
                 columns={columns}
@@ -118,7 +116,6 @@ export default function TestcaseFileGenerator() {
                 onSelectedRowsChange={handleChange}
 
               />}
-            </div>
           </div>
         </div>
       </div>

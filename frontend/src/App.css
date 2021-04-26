@@ -64,14 +64,15 @@ Global Styles
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: var(--ff-secondary);
   background: var(--clr-grey-3);
   color: var(--clr-grey-4);
   line-height: 1.5;
   font-size: 0.875rem;
-  height: 100%;
 }
+
 ul {
   list-style-type: none;
 }
