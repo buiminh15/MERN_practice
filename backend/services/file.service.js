@@ -1,6 +1,5 @@
 import fs from 'fs';
 import XlsxPopulate from 'xlsx-populate';
-import request from 'request-promise';
 import path from 'path';
 import { MAX_LINE_IN_SHEET } from '../utils/constants';
 import {
@@ -23,6 +22,7 @@ import httpStatus from 'http-status';
 const filePath = path.join(__dirname, '..', 'templates', 'test.xlsx')
 const fileTransPath = path.join(__dirname, '..', 'templates', 'dich.xlsx')
 const fileToolAdminPath = path.join(__dirname, '..', 'templates', 'ToolAdmin.xlsm')
+const fileToolAdminPath1 = path.join(__dirname, '..', 'templates', '1.txt')
 // const fileCsvPath = path.join(__dirname, '..', 'upload', 'test.csv')
 
 const rangeTrans = { s: { c: 1, r: 1 }, e: { c: 75, r: 100 } }
@@ -113,7 +113,12 @@ const generateExcelTranslatorFile = async (req, res) => {
 }
 
 const sendToolExcelFileFunc = (req, res) => {
-    res.status(httpStatus.OK).sendFile(fileToolAdminPath);
+    // let buffer = fs.readFileSync(fileToolAdminPath)
+    // let bufferBase64 = Buffer.from(buffer);
+    // res.contentType("application/vnd.ms-excel.sheet.macroEnabled.12");
+    // res.status(httpStatus.OK).send(bufferBase64);
+    // console.log('dada')
+    res.download(fileToolAdminPath);
 }
 
 export {
