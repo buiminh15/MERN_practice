@@ -41,8 +41,7 @@ export default function ToolAdmin(props) {
             <Header />
             <div>
                 <div className="container">
-                    <a href={'http://localhost:4000/api/v1' + URL_SERVER.DOWNLOAD_TOOL_ADMIN_FILE} >Download</a>
-                    <a href={'https://stackoverflow.com/'} >Download</a>
+                    <a href={URL_SERVER.BASE_URL + URL_SERVER.DOWNLOAD_TOOL_ADMIN_FILE} >Download</a>
                 </div>
             </div>
         </>

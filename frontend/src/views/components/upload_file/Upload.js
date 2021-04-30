@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Progress from "../progress_bar/Progress";
+import { URL_SERVER } from '../../../helpers/constant';
+import request from '../../../service/request';
 
 class Upload extends Component {
   constructor(props) {
@@ -73,8 +75,15 @@ class Upload extends Component {
       const formData = new FormData();
       formData.append("file", file, file.name);
 
-      req.open("POST", "http://localhost:8000/upload");
+      req.open("POST", URL_SERVER.BASE_URL + URL_SERVER.DOWNLOAD_TRANSLATOR_FILE );
       req.send(formData);
+
+      // const res = await request.post(URL_SERVER.DOWNLOAD_TRANSLATOR_FILE, body, { responseType: "arraybuffer" })
+      // const blob = new Blob([res.data], {
+      //   type:
+      //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      // });
+      // fileDownload(blob, 'filename.xlsx');
     });
   }
 
