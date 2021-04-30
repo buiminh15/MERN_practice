@@ -5,7 +5,7 @@ const MIME_TYPE = {
 
 const DESTINATION_PATH = 'D:\\D5-TOOLS-TEST\\'
 
-const MAX_LINE_IN_SHEET = 6
+const MAX_LINE_IN_SHEET = 18
 
 const SPECIAL_CHARACTERS = {
     CIRCLE_CHECK: '〇'

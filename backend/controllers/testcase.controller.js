@@ -5,6 +5,7 @@ import testcaseService from '../services/web_testcase.service';
 
 const getTestcases = catchAsync(async (req, res) => {
   const { name } = req.params
+  console.log('name ', name)
   const testcases = await testcaseService.getTestcasesByField(name);
   res.status(httpStatus.OK).json({ testcases });
 });
