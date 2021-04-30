@@ -34,7 +34,7 @@ export default function TestcaseFileGenerator() {
 
   const columns = useMemo(() => [
     {
-      name: 'Title',
+      name: 'Testcases',
       selector: 'testcase',
       sortable: true,
       maxWidth: '60%',
@@ -59,6 +59,7 @@ export default function TestcaseFileGenerator() {
     try {
       const res = await request.get(URL_SERVER.GET_TESTCASES + '/' + selectedField)
       if (res.status === 200) {
+        console.log('res  sss ', res)
         setData(res.data.testcases[0].testcases)
       }
     } catch (error) {
@@ -67,7 +68,7 @@ export default function TestcaseFileGenerator() {
   }
 
   const handleClick = (e) => {
-    setSelectedField(e.target.name.toLowerCase().replace(' ', '_'))
+    setSelectedField(e.target.name.toLowerCase().replaceAll(' ', '_'))
   }
   const handleChange = useCallback(state => setSelectedIds(state.selectedRows.map(row => row._id)));
 

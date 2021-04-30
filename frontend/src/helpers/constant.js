@@ -1,4 +1,4 @@
-export const URL_LINK_TRANSLATOR = 'https://www.onlinedoctranslator.com/en/'
+export const URL_LINK_TRANSLATOR = 'https://www.onlinedoctranslator.com/en/translationform'
 
 export const URL_SERVER = {
   BASE_URL: 'http://localhost:4000/api/v1',
