@@ -3,7 +3,8 @@ import {
     genExcelTestcaseFile,
     genTextFile,
     generateExcelTranslatorFile,
-    sendToolExcelFileFunc
+    sendToolExcelFileFunc,
+    uploadFile
 } from '../services/file.service';
 
 const generateTextFile = (req, res, next) => {
@@ -21,7 +22,8 @@ const generateTestcaseFile = (req, res, next) => {
 }
 
 const generateTranslatorFile = (req, res, next) => {
-    generateExcelTranslatorFile(req, res);
+    uploadFile(req, res)
+    // generateExcelTranslatorFile(req, res);
 }
 const sendToolAdminFile = (req, res, next) => {
     sendToolExcelFileFunc(req, res);

@@ -18,7 +18,23 @@ import Testcase from '../models/testcase.model';
 import WebTestcase from '../models/webtest.model';
 import { MIME_TYPE, DESTINATION_PATH } from '../utils/constants';
 import httpStatus from 'http-status';
+import multer from 'multer';
 
+// upload file
+var filenameUpload = '';
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '..', 'upload'))
+    },
+    filename: function (req, file, cb) {
+        // cb(null, Date.now() + '-' + file.originalname)
+        filenameUpload = Date.now() + '-' + file.originalname
+        cb(null, filenameUpload)
+    }
+})
+var upload = multer({ storage: storage }).single('file')
+
+// Paths
 const filePath = path.join(__dirname, '..', 'templates', 'test.xlsx')
 const fileTransPath = path.join(__dirname, '..', 'templates', 'dich.xlsx')
 const fileToolAdminPath = path.join(__dirname, '..', 'templates', 'ToolAdmin.xlsm')
@@ -100,16 +116,40 @@ const genExcelTestcaseFile = async (req, res) => {
     }
 }
 
-const generateExcelTranslatorFile = async (req, res) => {
-    const { translate_from, translate_to } = req.body;
-    const workbook = await XlsxPopulate.fromFileAsync(fileTransPath)
-    const sheets = workbook.sheets();
-    for (let i = 0; i < sheets.length; i++) {
-        await translateSheet(translate_from, translate_to, workbook.sheet(i), rangeTrans)
-    }
-    await workbook.toFileAsync("./out.xlsx")
-    res.status(httpStatus.OK).json({ message: 'Done' })
+const uploadFile = (req, res) => {
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(500).json(err)
+        } else if (err) {
+            return res.status(500).json(err)
+        }
+        generateExcelTranslatorFile()
+    })
+}
 
+const generateExcelTranslatorFile = async (req, res) => {
+    // const { translate_from, translate_to } = req.body;
+    const translate_from = 'ja'
+    const translate_to = 'en'
+    if (filenameUpload) {
+        let path1 = path.join(__dirname, '..', 'upload', filenameUpload)
+        console.log(' filenameUpload 11', path1);
+        const workbook = await XlsxPopulate.fromFileAsync(fileTransPath)
+        const sheets = workbook.sheets();
+        for (let i = 0; i < sheets.length; i++) {
+            await translateSheet(translate_from, translate_to, workbook.sheet(i), rangeTrans)
+        }
+        const excelFile = await workbook.toFileAsync(`./${filenameUpload}`)
+        res.attachment("./out.xlsx");
+        res.send(excelFile);
+        try {
+            fs.unlinkSync(path1)
+            fs.unlinkSync(`./${filenameUpload}`)
+            //file removed
+        } catch (err) {
+            console.error(err)
+        }
+    }
 }
 
 const sendToolExcelFileFunc = (req, res) => {
@@ -126,5 +166,6 @@ export {
     genExcelFile,
     genExcelTestcaseFile,
     generateExcelTranslatorFile,
-    sendToolExcelFileFunc
+    sendToolExcelFileFunc,
+    uploadFile
 }
